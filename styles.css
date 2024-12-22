@@ -17,19 +17,37 @@ body {
     text-align: center;
 }
 
+/* Koppen */
 h1 {
     color: #9c1925;
+    font-size: 2.5em;
+    margin-bottom: 20px;
 }
 
+h2 {
+    color: #555;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+/* Paragrafen */
+p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Tekstvelden */
 textarea, select {
     width: 100%;
-    height: 50px;
-    margin: 15px 0;
+    margin-bottom: 20px;
     padding: 10px;
-    font-size: 1em;
+    font-size: 1.1em;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     resize: none;
+    transition: border-color 0.3s ease-in-out;
 }
 
 textarea:focus, select:focus {
@@ -37,28 +55,121 @@ textarea:focus, select:focus {
     outline: none;
 }
 
+/* Validatiefeedback */
+textarea.error, select.error {
+    border-color: red !important;
+}
+
+/* Knoppen */
 .btn {
+    display: inline-block;
     padding: 12px 20px;
-    margin: 10px;
-    background: #9c1925;
+    font-size: 1em;
+    background-color: #9c1925;
     color: white;
     border: none;
     border-radius: 5px;
+    margin: 10px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn:hover {
-    background: #b3212f;
+    background-color: #b3212f;
+    transform: scale(1.05);
 }
 
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Resetknop styling */
+.reset-btn {
+    background-color: #f39c12;
+    color: white;
+}
+
+.reset-btn:hover {
+    background-color: #e67e22;
+}
+
+/* Verborgen secties */
 .section.hidden {
     display: none;
 }
 
-.reset-btn {
-    background: #f39c12;
+/* Actieve secties */
+.section {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
-.reset-btn:hover {
-    background: #e67e22;
+.section:not(.hidden) {
+    opacity: 1;
+}
+
+/* Analyse sectie stijl */
+#analysis-section {
+    background-color: #f7f7f7;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+#analysis-section label {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+#analysis-section select {
+    margin-bottom: 10px;
+}
+
+/* Voortgangsindicator */
+#progress-indicator {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#progress-indicator span {
+    font-weight: bold;
+    color: #9c1925;
+}
+
+/* Navigatie */
+.navigation {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Toetsenbordtoegankelijkheid */
+.btn:focus {
+    outline: 2px solid #f39c12;
+    outline-offset: 2px;
+}
+
+/* Responsief ontwerp */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
 }
