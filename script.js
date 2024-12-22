@@ -114,4 +114,18 @@ document.addEventListener("DOMContentLoaded", () => {
         let emotionsSummary = [];
         let bodyPartsSummary = [];
         for (let day = 1; day <= totalDays; day++) {
-            const dayReflections
+            const dayReflections = reflections[day];
+            if (dayReflections) {
+                emotionsSummary.push(dayReflections.emotions.join(", "));
+                bodyPartsSummary.push(dayReflections.bodyParts.join(", "));
+            }
+        }
+
+        return `
+            Gedurende de 14 dagen heb je de volgende emoties ervaren: ${emotionsSummary.join(", ")}.<br>
+            Deze emoties werden vaak gevoeld in de volgende lichaamsdelen: ${bodyPartsSummary.join(", ")}.<br>
+            Deze reflecties geven je belangrijke inzichten over hoe je emoties zich fysiek manifesteren. Kijk naar terugkerende lichamelijke klachten, zoals spanning in bepaalde delen van je lichaam, en werk aan het loslaten van die spanningen.
+        `;
+    };
+
+    // Knop
