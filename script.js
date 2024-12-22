@@ -1,96 +1,78 @@
 // script.js
 
-// Spellen data
-const games = {
-    charades: {
-        title: "Emotie-Charades",
-        steps: [
-            "Blij maar zenuwachtig",
-            "Gefrustreerd door de vaatwasser",
-            "Boos maar stil",
-            "Ongemakkelijk blij",
-            "Heel enthousiast over een idee"
-        ]
-    },
-    detective: {
-        title: "De Emotie-Detective",
-        instructions: [
-            "Observeer emoties van je partner en maak aantekeningen.",
-            "Bespreek samen wat je hebt geobserveerd."
-        ]
-    },
-    "body-language": {
-        title: "Het Lichaamstaal-Spel",
-        steps: [
-            "Handen in je zij",
-            "Je armen over elkaar",
-            "Je wenkbrauwen fronsen",
-            "Je hoofd schudden",
-            "Met je vingers tikken"
-        ]
-    }
-};
+// Dagelijkse opdrachten
+const tasks = [
+    { day: 1, title: "Reflectie op emoties ❤️", description: "Noteer drie momenten waarop jij sterke emoties hebt gevoeld deze week. 🥺 Bespreek samen hoe jullie die emoties beter hadden kunnen communiceren." },
+    { day: 2, title: "Complimentendag 🌟", description: "Geef elkaar gedurende de dag drie oprechte complimenten. Noteer hoe dit voelt. ❤️" },
+    { day: 3, title: "Triggers ontdekken 🤔", description: "Bespreek situaties die vaak frustraties of irritaties oproepen. Wat kun je herkennen in jezelf of de ander? 😡" },
+    { day: 4, title: "Het Time-Out Plan 🔄", description: "Maak samen afspraken over hoe je een 'time-out' kunt nemen bij een conflict. Welke signalen gebruik je? 🛑" },
+    // Voeg hier meer dagen toe...
+];
+
+// Huidige status
+let currentDay = 1;
+let progress = [];
+let totalScore = 0;
 
 // Elementen selecteren
-const menu = document.getElementById("menu");
-const gameSection = document.getElementById("game");
-const gameTitle = document.getElementById("game-title");
-const gameContent = document.getElementById("game-content");
-const backBtn = document.getElementById("back-btn");
+const dayNumber = document.getElementById("day-number");
+const dailyTask = document.getElementById("daily-task");
+const nextBtn = document.getElementById("next-btn");
+const reflection = document.createElement("textarea");
+reflection.setAttribute("placeholder", "Wat voelde je tijdens de opdracht? ❤️");
+reflection.style.width = "100%";
+reflection.style.height = "100px";
+const feedback = document.createElement("p");
 
-// Actieve game status
-let currentGame = null;
-let currentStep = 0;
+// Opdracht laden
+function loadTask() {
+    const task = tasks.find(t => t.day === currentDay);
+    if (!task) return;
 
-// Spel starten
-function startGame(gameKey) {
-    currentGame = games[gameKey];
-    currentStep = 0;
+    dayNumber.textContent = currentDay;
+    dailyTask.innerHTML = `
+        <h2>${task.title}</h2>
+        <p>${task.description}</p>
+    `;
+    dailyTask.appendChild(reflection);
+    dailyTask.appendChild(feedback);
 
-    // Verberg menu en toon spel
-    menu.classList.add("hidden");
-    gameSection.classList.remove("hidden");
-    backBtn.classList.remove("hidden");
-
-    // Toon spel inhoud
-    displayGame();
-}
-
-// Spelinhoud tonen
-function displayGame() {
-    gameTitle.textContent = currentGame.title;
-
-    if (currentGame.steps) {
-        // Voor spellen met stappen (charades, body-language)
-        if (currentStep < currentGame.steps.length) {
-            gameContent.innerHTML = `
-                <p>${currentGame.steps[currentStep]}</p>
-                <button class="btn" onclick="nextStep()">Volgende</button>
-            `;
-        } else {
-            gameContent.innerHTML = "<p>Gefeliciteerd, je hebt het spel voltooid!</p>";
-        }
-    } else if (currentGame.instructions) {
-        // Voor spellen met instructies (detective)
-        gameContent.innerHTML = `
-            <textarea rows="10" placeholder="Maak hier je aantekeningen..." style="width: 100%; padding: 10px;"></textarea>
-            <p>${currentGame.instructions.join(" ")}</p>
-        `;
+    if (currentDay < tasks.length) {
+        nextBtn.classList.remove("hidden");
+    } else {
+        nextBtn.classList.add("hidden");
+        dailyTask.innerHTML += "<p>Gefeliciteerd! Jullie hebben het hele spel voltooid! 🎉❤️</p>";
+        showFinalScore();
     }
 }
 
-// Volgende stap
-function nextStep() {
-    currentStep++;
-    displayGame();
+// Volgende dag
+nextBtn.addEventListener("click", () => {
+    const reflectionText = reflection.value.trim();
+    if (!reflectionText) {
+        feedback.textContent = "Vul je reflectie in voordat je doorgaat! 🛑";
+        feedback.style.color = "red";
+        return;
+    }
+    progress.push({ day: currentDay, reflection: reflectionText, score: Math.random() * 10 + 1 }); // Simuleer score
+    totalScore += progress[progress.length - 1].score;
+    feedback.textContent = "Goed gedaan! Jullie werken aan jullie relatie! 🌟🚀";
+    feedback.style.color = "green";
+
+    currentDay++;
+    reflection.value = "";
+    loadTask();
+});
+
+// Eindscore tonen
+function showFinalScore() {
+    dailyTask.innerHTML = `
+        <h2>Eindrapport 🌟</h2>
+        <p>Jullie hebben ${progress.length} van de 14 opdrachten voltooid. ✅</p>
+        <p>Gemiddelde score: ${(totalScore / progress.length).toFixed(2)} 🌟.</p>
+        <p>Ga zo door om jullie relatie sterker te maken! ❤️</p>
+    `;
 }
 
-// Terug naar menu
-function goBack() {
-    currentGame = null;
-    currentStep = 0;
-
-    // Verberg spel en toon menu
-    gameSection.classList.add("hidden");
-    menu.classList.remove("hidden");
-}
+// Start spel
+loadTask();
