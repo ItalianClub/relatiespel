@@ -1,53 +1,56 @@
-/* Algemene pagina-opmaak */
+/* Algemene styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f3f2ef;
-    color: #333;
     margin: 0;
     padding: 0;
+    color: #333;
 }
 
-/* Container styling */
 .container {
-    max-width: 700px;
+    max-width: 800px;
     margin: 50px auto;
-    text-align: center;
+    padding: 20px;
     background-color: white;
-    padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-/* Hoofdtekst en kopjes */
+/* Koppen */
 h1 {
-    color: #9c1925;
     font-size: 2.5em;
+    color: #9c1925;
     margin-bottom: 20px;
 }
 
 h2 {
-    color: #333;
     font-size: 1.8em;
+    color: #333;
     margin-bottom: 15px;
 }
 
+/* Paragrafen */
 p {
     font-size: 1.2em;
     line-height: 1.6;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 /* Tekstvelden */
 textarea {
     width: 100%;
     height: 120px;
-    margin: 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 12px;
     font-size: 1.1em;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     resize: none;
-    transition: border-color 0.3s;
+}
+
+textarea::placeholder {
+    font-style: italic;
+    color: #999;
 }
 
 textarea:focus {
@@ -57,14 +60,15 @@ textarea:focus {
 
 /* Knoppen */
 .btn {
+    display: inline-block;
     padding: 12px 20px;
     font-size: 1em;
     background-color: #9c1925;
     color: white;
     border: none;
     border-radius: 5px;
+    margin: 10px;
     cursor: pointer;
-    margin: 10px 5px;
     transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -73,43 +77,17 @@ textarea:focus {
     transform: scale(1.05);
 }
 
-/* Verborgen elementen */
+/* Verborgen secties */
 .hidden {
     display: none;
 }
 
-/* Sectie styling */
-.feedback, #analysis-section, #check-out-section {
-    margin: 20px 0;
-    padding: 20px;
-    border: 1px dashed #9c1925;
+/* Secties */
+#analysis-section, #sleep-section {
+    margin-top: 20px;
+    padding: 15px;
     background-color: #fff0f0;
+    border: 1px dashed #9c1925;
     color: #9c1925;
     border-radius: 10px;
-    font-size: 1.1em;
-    line-height: 1.6;
-}
-
-/* Responsieve layout */
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 2em;
-    }
-
-    h2 {
-        font-size: 1.5em;
-    }
-
-    textarea {
-        font-size: 1em;
-    }
-
-    .btn {
-        font-size: 0.9em;
-        padding: 10px 15px;
-    }
 }
