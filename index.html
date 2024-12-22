@@ -3,40 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>14-Daags Relatiespel ❤️</title>
+    <title>Flexibel Relatiespel ❤️</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>14-Daags Relatiespel ❤️</h1>
+        <h1>Flexibel Relatiespel ❤️</h1>
         <p id="intro">
             Werk elke dag aan jullie relatie met een unieke opdracht. Vandaag is Dag <span id="day-number">1</span>. 🚀
         </p>
-        
-        <!-- Voortgangsbalk -->
-        <div id="progress-bar-container" aria-label="Voortgang van het spel">
-            <div id="progress-bar"></div>
+
+        <!-- Dagelijkse Check-in -->
+        <div id="daily-check-in">
+            <h2>Hoe voel je je vandaag? 🧘‍♀️</h2>
+            <textarea id="check-in-text" placeholder="Schrijf hier je gedachten en gevoelens..."></textarea>
+            <button id="check-in-btn" class="btn">Check-in Voltooien ✅</button>
         </div>
-        
-        <!-- Opdracht van de dag -->
-        <div id="daily-task" class="task">
-            <p class="loading">De opdracht van vandaag wordt geladen... 🕒</p>
+
+        <!-- Opdrachten sectie -->
+        <div id="daily-task" class="hidden">
+            <h2 id="task-title"></h2>
+            <p id="task-description"></p>
+            <div id="choice-container" class="hidden">
+                <p>Kies een optie:</p>
+                <button id="option1" class="btn"></button>
+                <button id="option2" class="btn"></button>
+            </div>
         </div>
-        
+
         <!-- Feedback -->
         <div id="feedback-section" class="feedback hidden">
             <p><strong>Feedback:</strong> Jullie zijn goed bezig! 💪</p>
         </div>
-        
-        <!-- Beloningen -->
-        <div id="reward-section" class="reward hidden">
-            <p>🎉 Gefeliciteerd! Jullie hebben een mijlpaal bereikt! 🎉</p>
-        </div>
-        
+
         <!-- Knoppen -->
-        <div id="button-container">
-            <button id="start-btn" class="btn">Start Spel 🎮</button>
-            <button id="next-btn" class="btn hidden">Volgende Dag ➡️</button>
+        <div id="button-container" class="hidden">
+            <button id="next-btn" class="btn">Volgende Dag ➡️</button>
         </div>
     </div>
 
