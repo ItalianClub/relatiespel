@@ -81,7 +81,7 @@ p {
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #fff;
-    display: none; /* Verbergen tot geladen */
+    display: none;
 }
 
 #task-title {
@@ -98,11 +98,6 @@ p {
 
 #choice-container {
     margin-top: 10px;
-}
-
-#choice-container p {
-    margin-bottom: 10px;
-    font-size: 1.1em;
 }
 
 #choice-container .btn {
@@ -127,12 +122,6 @@ p {
     border-radius: 10px;
     background-color: #fff;
     display: none;
-}
-
-#overview-page h2 {
-    font-size: 1.5em;
-    color: #9c1925;
-    margin-bottom: 10px;
 }
 
 #overview-content {
