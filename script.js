@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let emotionalGrowth = []; // Opslag voor emotionele groei
     let bodyTension = []; // Opslag voor lichamelijke spanning
 
+    // Controleer of de voortgang al bestaat in localStorage
+    if (localStorage.getItem('currentDay')) {
+        currentDay = parseInt(localStorage.getItem('currentDay'));
+        reflections = JSON.parse(localStorage.getItem('reflections')) || {};
+    }
+
     // Secties ophalen
     const sections = {
         checkIn: document.getElementById("check-in-section"),
@@ -101,6 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.getElementById("check-in-text").value.trim();
         if (!input) return alert("Vul je reflectie in.");
         reflections[currentDay] = { checkIn: input };
+        // Sla reflecties op in localStorage
+        localStorage.setItem('reflections', JSON.stringify(reflections));
         showSection("analysis");
     });
 
@@ -122,6 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
             Je voelt deze emoties in: ${selectedBodyParts.join(", ")}.
         `;
         document.getElementById("summary-description").innerHTML = summaryText;
+        // Sla reflecties op in localStorage
+        localStorage.setItem('reflections', JSON.stringify(reflections));
         showSection("emotionSummary");
     });
 
@@ -151,6 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.getElementById("check-out-text").value.trim();
         if (!input) return alert("Vul je reflectie in.");
         reflections[currentDay].checkOut = input;
+        // Sla reflecties op in localStorage
+        localStorage.setItem('reflections', JSON.stringify(reflections));
         showSection("sleep");
     });
 
@@ -158,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.nextDay.addEventListener("click", () => {
         if (currentDay < totalDays) {
             currentDay++;
+            localStorage.setItem('currentDay', currentDay); // Sla de huidige dag op in localStorage
             loadDayContent();
             showSection("checkIn");
         } else {
@@ -183,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.prevDay.addEventListener("click", () => {
         if (currentDay > 1) {
             currentDay--;
+            localStorage.setItem('currentDay', currentDay); // Sla de huidige dag op in localStorage
             loadDayContent();
             showSection("checkIn");
         }
@@ -192,6 +206,8 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.reset.addEventListener("click", () => {
         currentDay = 1;
         reflections = {};
+        localStorage.removeItem('reflections');
+        localStorage.removeItem('currentDay');
         loadDayContent();
         showSection("checkIn");
     });
