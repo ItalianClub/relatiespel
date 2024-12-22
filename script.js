@@ -1,130 +1,96 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const tasks = [
-        {
-            title: "Lichamelijke signalen herkennen",
-            description: "Wat voel je in je lichaam vandaag? Beschrijf spanning, ademhaling, of energie.",
-            choices: ["Spanning in spieren", "Ontspanning en rust"]
-        },
-        {
-            title: "Ademhalingsoefening",
-            description: "Doe 5 diepe ademhalingen en observeer hoe je lichaam reageert.",
-            choices: ["Meer ontspanning", "Nog steeds spanning"]
-        },
-        {
-            title: "Emoties benoemen",
-            description: "Welke emotie voel je het sterkst vandaag? Beschrijf waar je dit in je lichaam voelt.",
-            choices: ["Blijheid in de borst", "Stress in de schouders"]
-        },
-        {
-            title: "Progressieve spierontspanning",
-            description: "Span en ontspan je schouders, nek en kaak. Hoe voelt dit?",
-            choices: ["Meer rust", "Nog steeds spanning"]
-        },
-        {
-            title: "Observeren zonder oordeel",
-            description: "Ga rustig zitten en observeer je ademhaling. Welke gedachten komen op?",
-            choices: ["Rustige gedachten", "Onrustige gedachten"]
-        },
-        {
-            title: "Non-verbale communicatie",
-            description: "Hoe voel je je lichaamstaal vandaag? Wat zou je partner hiervan merken?",
-            choices: ["Open en ontspannen", "Gesloten en gespannen"]
-        },
-        // Meer opdrachten voor de 14 dagen
+    const checkInPrompts = [
+        "Wat voel je nu in je borst? Hoe zou je dit omschrijven?",
+        "Hoe zwaar voelt je hoofd op een schaal van 1 tot 10?",
+        "Waar voel je spanning in je lichaam?",
+        "Hoe voelt je ademhaling op dit moment?",
+        "Als je lichaam een kleur zou hebben, welke kleur zou het nu zijn?",
+        "Beschrijf je energie als een batterij. Hoe vol is deze?",
+        "Voelt je buik zwaar, licht of neutraal?",
+        "Hoe voelen je handen? Warm, koud, gespannen?",
+        "Beschrijf je schouders. Zijn ze ontspannen of gespannen?",
+        "Als je voeten konden praten, wat zouden ze nu zeggen?",
+        "Voel je ergens tintelingen in je lichaam? Waar?",
+        "Hoe voelt je rug? Licht, zwaar of neutraal?",
+        "Beschrijf je ademhaling als een rivier. Hoe stroomt deze?",
+        "Hoe voelt je lichaam op dit moment als een geheel?",
     ];
 
-    const checkInData = [];
-    const checkOutData = [];
-    const feedbackData = [];
+    const exercises = [
+        { title: "Ademruimte nemen", description: "Focus 3 minuten op je ademhaling. Wat merk je op? Beschrijf je ademhaling in woorden." },
+        { title: "Emotionele woordenlijst", description: "Kies 3 emoties uit een lijst en beschrijf waar je ze voelt in je lichaam." },
+        { title: "Spanning en ontspanning", description: "Span je schouders en laat los. Wat voel je tijdens de spanning en ontspanning?" },
+        { title: "Innerlijke stem", description: "Schrijf een gesprek op tussen jouw 'kalme ik' en jouw 'gestreste ik'." },
+        { title: "Ademhaling observeren", description: "Adem langzaam in en uit. Hoe verandert je lichaam tijdens deze oefening?" },
+        { title: "Emoties tekenen", description: "Teken hoe je je vandaag voelt. Gebruik kleuren en vormen." },
+        { title: "Fysieke scan", description: "Ga liggen en observeer je lichaam van hoofd tot teen. Waar voel je spanning?" },
+        { title: "Woordenschat uitbreiden", description: "Zoek 5 nieuwe woorden voor emoties en probeer deze te gebruiken in een zin." },
+        { title: "Lichaamstaal observeren", description: "Observeer jezelf in de spiegel. Wat zegt je lichaam vandaag?" },
+        { title: "Triggers onderzoeken", description: "Schrijf een situatie op die een sterke emotie opriep. Waar voelde je dit in je lichaam?" },
+        { title: "Dankbaarheid tonen", description: "Schrijf 3 dingen op waar je dankbaar voor bent en beschrijf hoe dat voelt." },
+        { title: "Schrijf je ademhaling op", description: "Beschrijf hoe je ademhaling aanvoelt in verschillende situaties." },
+        { title: "Complimenten geven", description: "Geef jezelf 3 complimenten. Wat voel je bij elk compliment?" },
+        { title: "Eindreflectie", description: "Wat heb je in de afgelopen dagen geleerd over je emoties en lichaam?" },
+    ];
+
+    const checkOutPrompts = [
+        "Wat voelde je in je lichaam tijdens de dag?",
+        "Welke emotie kwam het meest voor vandaag?",
+        "Waar voelde je rust in je lichaam?",
+        "Welke situatie gaf je energie?",
+        "Voelde je je ademhaling veranderen tijdens stress? Hoe?",
+        "Welke kleur had je stemming vandaag?",
+        "Voelde je spanning in je buik? Wanneer?",
+        "Hoe voelde je je schouders aan het einde van de dag?",
+        "Wat gaf je een glimlach vandaag? Hoe voelde dat?",
+        "Welke situatie maakte je emotioneel? Hoe voelde dat in je lichaam?",
+        "Waar voelde je kalmte? Hoe kun je dit vaker oproepen?",
+        "Voelde je verschil in ademhaling tijdens rustmomenten?",
+        "Welke beweging voelde goed vandaag?",
+        "Wat heb je geleerd over je lichaam en emoties?",
+    ];
+
     let currentDay = 0;
 
-    const dayNumber = document.getElementById("day-number");
-    const checkInText = document.getElementById("check-in-text");
-    const checkInBtn = document.getElementById("check-in-btn");
-    const analysisSection = document.getElementById("analysis-section");
-    const analysisResult = document.getElementById("analysis-result");
-    const nextBtn = document.getElementById("next-btn");
-    const taskSection = document.getElementById("task-section");
-    const taskTitle = document.getElementById("task-title");
-    const taskDescription = document.getElementById("task-description");
-    const option1 = document.getElementById("option1");
-    const option2 = document.getElementById("option2");
-    const checkOutSection = document.getElementById("check-out-section");
-    const checkOutText = document.getElementById("check-out-text");
-    const checkOutBtn = document.getElementById("check-out-btn");
-    const feedbackSection = document.getElementById("feedback-section");
-    const feedbackMessage = document.getElementById("feedback-message");
-    const nextDayBtn = document.getElementById("next-day-btn");
+    const checkInPromptElement = document.getElementById("check-in-prompt");
+    const exerciseTitleElement = document.getElementById("exercise-title");
+    const exerciseDescriptionElement = document.getElementById("exercise-description");
+    const checkOutPromptElement = document.getElementById("check-out-prompt");
 
-    // Check-in afronden
-    checkInBtn.addEventListener("click", () => {
-        const inputValue = checkInText.value.trim();
-        if (inputValue === "") {
-            alert("Vul je check-in in!");
-            return;
-        }
-        checkInData[currentDay] = inputValue;
-        checkInText.value = "";
-        showAnalysis(inputValue, "check-in");
-    });
+    function loadDay() {
+        checkInPromptElement.textContent = checkInPrompts[currentDay % checkInPrompts.length];
+        const exercise = exercises[currentDay % exercises.length];
+        exerciseTitleElement.textContent = exercise.title;
+        exerciseDescriptionElement.textContent = exercise.description;
+        checkOutPromptElement.textContent = checkOutPrompts[currentDay % checkOutPrompts.length];
+    }
 
-    function showAnalysis(input, type) {
-        let analysisMessage;
-        if (type === "check-in") {
-            analysisMessage = `Je gaf aan: "${input}". Dit is een belangrijke stap om bewust te worden van je emoties en lichaam. Let op signalen zoals ademhaling of spanning.`;
-        } else if (type === "check-out") {
-            analysisMessage = `Je reflectie: "${input}". Je groeit in bewustwording. Observeer hoe je lichaam reageerde op emoties vandaag.`;
-        }
-        analysisResult.textContent = analysisMessage;
-        analysisSection.classList.remove("hidden");
+    loadDay();
+
+    document.getElementById("check-in-btn").addEventListener("click", () => {
         document.getElementById("check-in-section").classList.add("hidden");
-    }
-
-    nextBtn.addEventListener("click", () => {
-        const task = tasks[currentDay % tasks.length];
-        dayNumber.textContent = currentDay + 1;
-        taskTitle.textContent = task.title;
-        taskDescription.textContent = task.description;
-        option1.textContent = task.choices[0];
-        option2.textContent = task.choices[1];
-        taskSection.classList.remove("hidden");
-        analysisSection.classList.add("hidden");
+        document.getElementById("analysis-section").classList.remove("hidden");
     });
 
-    checkOutBtn.addEventListener("click", () => {
-        const inputValue = checkOutText.value.trim();
-        if (inputValue === "") {
-            alert("Vul je check-out in!");
-            return;
-        }
-        checkOutData[currentDay] = inputValue;
-        checkOutText.value = "";
-        showAnalysis(inputValue, "check-out");
+    document.getElementById("next-btn").addEventListener("click", () => {
+        document.getElementById("analysis-section").classList.add("hidden");
+        document.getElementById("exercise-section").classList.remove("hidden");
     });
 
-    nextDayBtn.addEventListener("click", () => {
+    document.getElementById("complete-exercise-btn").addEventListener("click", () => {
+        document.getElementById("exercise-section").classList.add("hidden");
+        document.getElementById("check-out-section").classList.remove("hidden");
+    });
+
+    document.getElementById("check-out-btn").addEventListener("click", () => {
+        document.getElementById("check-out-section").classList.add("hidden");
+        document.getElementById("sleep-section").classList.remove("hidden");
+    });
+
+    document.getElementById("next-day-btn").addEventListener("click", () => {
         currentDay++;
-        if (currentDay >= tasks.length) {
-            showSummary();
-        } else {
-            resetDay();
-        }
-    });
-
-    function resetDay() {
+        loadDay();
+        document.getElementById("sleep-section").classList.add("hidden");
         document.getElementById("check-in-section").classList.remove("hidden");
-        feedbackSection.classList.add("hidden");
-    }
-
-    function showSummary() {
-        let summary = "";
-        checkInData.forEach((checkIn, index) => {
-            summary += `<div>Dag ${index + 1}: Check-in: ${checkIn || "Niet ingevuld"}, Check-out: ${checkOutData[index] || "Niet ingevuld"}</div>`;
-        });
-        document.getElementById("summary-content").innerHTML = summary;
-        document.getElementById("final-analysis").textContent =
-            "Je hebt een prachtige reis gemaakt in lichaamsbewustzijn en emotieherkenning. Ga door met reflecteren en communiceren.";
-        document.getElementById("summary-section").classList.remove("hidden");
-        feedbackSection.classList.add("hidden");
-    }
+    });
 });
