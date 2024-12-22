@@ -39,9 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentDay = 0;
     const checkIns = {}; // Opslag voor dagelijkse check-ins
 
-    /**
-     * Toon de dagelijkse check-in.
-     */
     function showCheckIn() {
         document.getElementById("daily-check-in").classList.remove("hidden");
         dailyTask.classList.add("hidden");
@@ -50,9 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
         overviewBtn.classList.add("hidden");
     }
 
-    /**
-     * Laad de opdracht voor de dag.
-     */
     function loadTask() {
         const task = tasks[currentDay % tasks.length];
         dayNumber.textContent = currentDay + 1;
@@ -63,23 +57,16 @@ document.addEventListener("DOMContentLoaded", () => {
         dailyTask.classList.remove("hidden");
         choiceContainer.classList.remove("hidden");
         feedbackSection.classList.add("hidden");
-        nextBtn.classList.add("hidden"); // Verbergen totdat feedback is getoond
-        overviewBtn.classList.remove("hidden");
     }
 
-    /**
-     * Toon feedback na keuze.
-     */
     function showFeedback(choice) {
         feedbackSection.innerHTML = `<p><strong>Feedback:</strong> Goede keuze! ${choice} is een mooie stap.</p>`;
         feedbackSection.classList.remove("hidden");
         choiceContainer.classList.add("hidden");
-        nextBtn.classList.remove("hidden"); // Knop weer tonen
+        nextBtn.classList.remove("hidden");
+        overviewBtn.classList.remove("hidden");
     }
 
-    /**
-     * Dagelijkse check-in voltooien.
-     */
     checkInBtn.addEventListener("click", () => {
         const checkInValue = checkInText.value.trim();
         if (checkInValue !== "") {
@@ -91,9 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /**
-     * Toon overzicht van eerdere dagen.
-     */
     overviewBtn.addEventListener("click", () => {
         overviewContent.innerHTML = "";
         for (const [day, text] of Object.entries(checkIns)) {
@@ -111,9 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
         overviewBtn.classList.add("hidden");
     });
 
-    /**
-     * Terug naar het spel.
-     */
     backBtn.addEventListener("click", () => {
         overviewPage.classList.add("hidden");
         dailyTask.classList.remove("hidden");
@@ -121,15 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
         overviewBtn.classList.remove("hidden");
     });
 
-    /**
-     * Volgende dag logica.
-     */
     nextBtn.addEventListener("click", () => {
         currentDay++;
         checkInText.value = ""; // Reset de check-in voor de volgende dag
         showCheckIn();
     });
 
-    // Begin spel met de check-in
     showCheckIn();
 });
