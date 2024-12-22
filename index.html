@@ -8,50 +8,53 @@
 </head>
 <body>
     <div class="container">
+        <!-- Hoofdtitel -->
         <h1>Emotieherkenning Game</h1>
+        <!-- Voortgangsindicator -->
         <p id="progress-indicator">Dag <span id="day-number">1</span> van 14</p>
 
         <!-- Check-in Sectie -->
         <div id="check-in-section" class="section">
             <h2>Check-in</h2>
             <p id="check-in-prompt">Hoe voel je je vandaag? Beschrijf je emoties en fysieke toestand.</p>
-            <textarea id="check-in-text" placeholder="Beschrijf hier je gevoelens..."></textarea>
+            <textarea id="check-in-text" placeholder="Beschrijf hier je gevoelens..." required></textarea>
             <button id="check-in-btn" class="btn">Voltooi Check-in</button>
         </div>
 
         <!-- Analyse Sectie -->
         <div id="analysis-section" class="section hidden">
             <h2>Analyse</h2>
-            <div id="analysis-result"></div>
-            <button id="next-btn" class="btn">Volgende Sectie</button>
+            <div id="analysis-result">
+                <p>Je analyse wordt hier weergegeven...</p>
+            </div>
+            <button id="next-btn" class="btn">Ga naar de Oefening</button>
         </div>
 
         <!-- Oefening Sectie -->
         <div id="exercise-section" class="section hidden">
             <h2>Oefening</h2>
-            <p id="exercise-title"></p>
-            <p id="exercise-description"></p>
+            <p id="exercise-title">Titel van de oefening</p>
+            <p id="exercise-description">Beschrijving van de oefening</p>
             <button id="complete-exercise-btn" class="btn">Voltooi Oefening</button>
         </div>
 
         <!-- Check-out Sectie -->
         <div id="check-out-section" class="section hidden">
             <h2>Check-out</h2>
-            <textarea id="check-out-text" placeholder="Wat heb je vandaag geleerd?"></textarea>
+            <textarea id="check-out-text" placeholder="Wat heb je vandaag geleerd? Beschrijf je inzichten..." required></textarea>
             <button id="check-out-btn" class="btn">Voltooi Check-out</button>
         </div>
 
-        <!-- Slaap Sectie -->
+        <!-- Slaap/ontspanning Sectie -->
         <div id="sleep-section" class="section hidden">
             <h2>Ontspanningsoefening</h2>
-            <p>Neem 5 minuten om bewust te ademen: adem diep in, houd vast, en adem langzaam uit.</p>
+            <p>Neem 5 minuten om bewust te ademen: adem diep in, houd vast, en adem langzaam uit. Focus op het ontspannen van je lichaam.</p>
             <button id="next-day-btn" class="btn">Volgende Dag</button>
         </div>
 
         <!-- Navigatie -->
         <div class="navigation">
             <button id="prev-day-btn" class="btn">← Vorige Dag</button>
-            <button id="next-day-btn" class="btn hidden">Volgende Dag →</button>
             <button id="reset-btn" class="btn reset-btn">Reset Game</button>
         </div>
     </div>
