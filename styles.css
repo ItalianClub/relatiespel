@@ -9,46 +9,49 @@ body {
 
 .container {
     max-width: 600px;
-    margin: 50px auto; /* Center het spel op het scherm */
+    margin: 50px auto;
     text-align: center;
-    background-color: white; /* Witte achtergrond voor contrast */
+    background-color: white; /* Witte achtergrond */
     padding: 20px;
     border-radius: 10px; /* Ronde hoeken */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Schaduw voor diepte */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Zachte schaduw */
 }
 
 h1 {
-    font-size: 2em; /* Grote titel */
+    font-size: 2em;
     color: #9c1925; /* Italiaanse roodtint */
     margin-bottom: 20px;
 }
 
 p {
-    font-size: 1.2em; /* Leessbare tekstgrootte */
+    font-size: 1.2em;
     margin-bottom: 20px;
     line-height: 1.6; /* Betere leesbaarheid */
 }
 
-textarea {
-    width: 100%; /* Tekstvak vult de breedte */
-    height: 100px; /* Voldoende ruimte voor tekst */
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none; /* Gebruiker kan het tekstvak niet schalen */
-    margin-top: 20px;
-    background-color: #f9f9f9;
+/* Progressiebalk */
+#progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: #e6ded0; /* Lichte achtergrondkleur */
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
 }
 
-textarea::placeholder {
-    color: #aaa; /* Lichte kleur voor de placeholder tekst */
+#progress-bar {
+    height: 100%;
+    background-color: #9c1925; /* Rode voortgangsbalk */
+    width: 0%; /* Startpunt */
+    transition: width 0.4s ease-in-out;
 }
 
+/* Knoppen */
 .btn {
     padding: 10px 20px;
     font-size: 1em;
-    background-color: #9c1925; /* Rood voor opvallende knoppen */
+    background-color: #9c1925;
     color: white;
     border: none;
     border-radius: 5px;
@@ -58,35 +61,18 @@ textarea::placeholder {
 }
 
 .btn:hover {
-    background-color: #b3212f; /* Donkerder rood bij hover */
+    background-color: #b3212f;
     transform: scale(1.05); /* Lichte vergroting bij hover */
 }
 
 .hidden {
-    display: none; /* Verbergt elementen */
+    display: none;
 }
 
-/* Progressiebalk */
-#progress-bar-container {
-    width: 100%;
-    height: 20px;
-    background-color: #e6ded0;
-    border-radius: 10px;
-    margin: 20px 0;
-    overflow: hidden;
-}
-
-#progress-bar {
-    height: 100%;
-    background-color: #9c1925;
-    width: 0%;
-    transition: width 0.4s ease-in-out;
-}
-
+/* Mobiele optimalisatie */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
-        margin: 20px auto;
     }
 
     h1 {
@@ -100,9 +86,5 @@ textarea::placeholder {
     .btn {
         font-size: 0.9em;
         padding: 8px 15px;
-    }
-
-    textarea {
-        height: 80px;
     }
 }
