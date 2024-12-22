@@ -17,21 +17,23 @@
             <h2>Check-in: Reflecteer op je dag</h2>
             <p id="check-in-prompt"></p>
             <textarea id="check-in-text" placeholder="Beschrijf je gevoelens en fysieke toestand..." required></textarea>
-            <button id="check-in-btn" class="btn" aria-label="Check-in Voltooien">Check-in Voltooien ✅</button>
+            <button id="check-in-btn" class="btn">Check-in Voltooien ✅</button>
         </div>
 
         <!-- Analyse Sectie -->
         <div id="analysis-section" class="section hidden">
             <h2>Analyse van je Check-in</h2>
-            <div id="analysis-result"></div>
-            <button id="next-btn" class="btn" aria-label="Ga naar de Oefening">Ga naar de Oefening ➡️</button>
+            <div id="analysis-result">
+                <p>We analyseren je invoer om je inzicht te geven.</p>
+            </div>
+            <button id="next-btn" class="btn">Ga naar de Oefening ➡️</button>
         </div>
 
         <!-- Oefening Sectie -->
         <div id="exercise-section" class="section hidden">
             <h2 id="exercise-title">Oefening van de Dag</h2>
             <p id="exercise-description"></p>
-            <button id="complete-exercise-btn" class="btn" aria-label="Oefening Voltooien">Oefening Voltooien ✅</button>
+            <button id="complete-exercise-btn" class="btn">Oefening Voltooien ✅</button>
         </div>
 
         <!-- Check-out Sectie -->
@@ -39,21 +41,21 @@
             <h2>Check-out: Reflecteer op je dag</h2>
             <p id="check-out-prompt"></p>
             <textarea id="check-out-text" placeholder="Wat heb je geleerd en ervaren vandaag?" required></textarea>
-            <button id="check-out-btn" class="btn" aria-label="Check-out Voltooien">Check-out Voltooien ✅</button>
+            <button id="check-out-btn" class="btn">Check-out Voltooien ✅</button>
         </div>
 
         <!-- Slaap Sectie -->
         <div id="sleep-section" class="section hidden">
             <h2>Slaapoefening: Kom tot rust</h2>
             <p>Neem 5 minuten om bewust te ademen. Adem diep in en langzaam uit.</p>
-            <button id="next-day-btn" class="btn" aria-label="Volgende Dag">Volgende Dag ➡️</button>
+            <button id="next-day-btn" class="btn">Volgende Dag ➡️</button>
         </div>
 
         <!-- Navigatie -->
         <div class="navigation">
-            <button id="prev-day-btn" class="btn" aria-label="Vorige Dag">← Vorige Dag</button>
-            <button id="next-day-btn" class="btn" aria-label="Volgende Dag">Volgende Dag →</button>
-            <button id="reset-btn" class="btn reset-btn" aria-label="Reset Alles">Reset Alles 🔄</button>
+            <button id="prev-day-btn" class="btn">← Vorige Dag</button>
+            <button id="next-day-btn" class="btn">Volgende Dag →</button>
+            <button id="reset-btn" class="btn reset-btn">Reset Alles 🔄</button>
         </div>
     </div>
     <script src="script.js"></script>
