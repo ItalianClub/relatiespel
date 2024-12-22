@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
      * Laad de opdracht voor de dag.
      */
     function loadTask() {
-        const task = tasks[currentDay];
+        const task = tasks[currentDay % tasks.length];
         dayNumber.textContent = currentDay + 1;
         taskTitle.textContent = task.title;
         taskDescription.textContent = task.description;
@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackSection.innerHTML = `<p><strong>Feedback:</strong> Goede keuze! ${choice} is een mooie stap.</p>`;
         feedbackSection.classList.remove("hidden");
         choiceContainer.classList.add("hidden");
+        nextBtn.classList.remove("hidden");
     }
 
     /**
@@ -81,8 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
      * Volgende dag logica.
      */
     nextBtn.addEventListener("click", () => {
-        currentDay = (currentDay + 1) % tasks.length;
+        currentDay++;
         loadTask();
+        nextBtn.classList.add("hidden");
     });
 
     // Begin spel
