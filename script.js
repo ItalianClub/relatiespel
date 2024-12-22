@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const totalDays = 14;
     let currentDay = 1;
+    let reflections = {};
 
     const sections = {
         checkIn: document.getElementById("check-in-section"),
@@ -40,59 +41,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const exercises = [
         {
             title: "Emotie Observeren",
-            description: "Reflecteer op een emotie die je vandaag hebt ervaren.",
+            description: "Schrijf drie emoties op die je vandaag hebt ervaren. Kies er één en beschrijf waar je deze in je lichaam voelde.",
         },
         {
             title: "Ademhalingsoefening",
-            description: "Adem diep in en uit en observeer je lichaam.",
+            description: "Adem diep in en langzaam uit gedurende 5 minuten. Observeer hoe je ademhaling je lichaam beïnvloedt.",
         },
         {
             title: "Dankbaarheid",
-            description: "Schrijf drie dingen op waar je dankbaar voor bent.",
+            description: "Schrijf drie dingen op waar je vandaag dankbaar voor bent en reflecteer op hoe dat voelt in je lichaam.",
         },
         {
             title: "Lichaamsscan",
-            description: "Scan je lichaam van top tot teen en voel waar spanning zit.",
+            description: "Scan je lichaam van top tot teen. Waar voel je spanning of ontspanning?",
         },
         {
             title: "Spanning Loslaten",
-            description: "Span al je spieren aan, houd vast, en laat los.",
+            description: "Span gedurende 5 seconden al je spieren aan en laat dan los. Observeer het verschil in spanning.",
         },
         {
             title: "Moment van Blijdschap",
-            description: "Herinner je een moment van blijdschap vandaag.",
-        },
-        {
-            title: "Communicatie Reflectie",
-            description: "Reflecteer op hoe je vandaag hebt gecommuniceerd.",
-        },
-        {
-            title: "Non-verbale Signalering",
-            description: "Wat vertelt je lichaamstaal vandaag?",
-        },
-        {
-            title: "Leren Loslaten",
-            description: "Schrijf iets op wat je lastig vond los te laten.",
-        },
-        {
-            title: "Visualisatie",
-            description: "Sluit je ogen en visualiseer een rustige plek.",
+            description: "Herinner je een moment van blijdschap. Wat voelde je en waar in je lichaam voelde je dat?",
         },
         {
             title: "Triggers Herkennen",
-            description: "Identificeer situaties die spanning veroorzaakten.",
+            description: "Identificeer een situatie die spanning veroorzaakte. Wat was de trigger en hoe voelde je lichaam?",
         },
         {
             title: "Balans Creëren",
-            description: "Wat gaf je balans vandaag?",
-        },
-        {
-            title: "Positieve Lichaamsbeweging",
-            description: "Doe 5 minuten lichte beweging en observeer het effect.",
-        },
-        {
-            title: "Samenvatting van de Dag",
-            description: "Reflecteer op je dag en beschrijf je inzichten.",
+            description: "Schrijf drie dingen op die balans in je dag brachten en reflecteer hoe je lichaam reageert.",
         },
     ];
 
@@ -109,13 +86,25 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.checkIn.addEventListener("click", () => {
         const input = document.getElementById("check-in-text").value.trim();
         if (!input) return alert("Vul je reflectie in.");
+        reflections[currentDay] = { checkIn: input };
         showSection("analysis");
     });
 
     buttons.emotionSubmit.addEventListener("click", () => {
-        const emotion = document.getElementById("emotion-select").value;
-        const body = document.getElementById("body-select").value;
-        if (!emotion || !body) return alert("Beantwoord beide vragen.");
+        const selectedEmotions = Array.from(document.getElementById("emotion-select").selectedOptions).map(opt => opt.value);
+        const selectedBodyParts = Array.from(document.getElementById("body-select").selectedOptions).map(opt => opt.value);
+
+        if (!selectedEmotions.length || !selectedBodyParts.length) {
+            return alert("Selecteer minstens één emotie en één lichaamsdeel.");
+        }
+
+        reflections[currentDay].emotions = selectedEmotions;
+        reflections[currentDay].bodyParts = selectedBodyParts;
+
+        const dominantEmotion = selectedEmotions[0]; // Kies de eerste als leidend
+        document.getElementById("exercise-title").textContent = `Focus op ${dominantEmotion}`;
+        document.getElementById("exercise-description").textContent = `Reflecteer op hoe ${dominantEmotion} je dag heeft beïnvloed en hoe je dit in je ${selectedBodyParts.join(', ')} voelde.`;
+
         showSection("exercise");
     });
 
@@ -124,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.checkOut.addEventListener("click", () => {
         const input = document.getElementById("check-out-text").value.trim();
         if (!input) return alert("Vul je reflectie in.");
+        reflections[currentDay].checkOut = input;
         showSection("sleep");
     });
 
@@ -147,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     buttons.reset.addEventListener("click", () => {
         currentDay = 1;
+        reflections = {};
         loadDayContent();
         showSection("checkIn");
     });
