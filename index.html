@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotie-Charades</title>
-    <link rel="stylesheet" href="styles-charades.css">
+    <title>Relatie-Spellen</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Emotie-Charades</h1>
-        <p>Beeld een emotie uit en laat je partner raden!</p>
-        <button id="start-btn" class="btn">Start Spel</button>
-        <div id="charades-game" class="hidden">
-            <h2 id="emotion"></h2>
-            <button id="next-btn" class="btn">Volgende Emotie</button>
+        <h1>Relatie-Spellen</h1>
+        <p>Kies een spel om te spelen en verbeter jullie connectie!</p>
+        <div id="menu">
+            <button class="btn" onclick="startGame('charades')">Emotie-Charades</button>
+            <button class="btn" onclick="startGame('detective')">De Emotie-Detective</button>
+            <button class="btn" onclick="startGame('body-language')">Het Lichaamstaal-Spel</button>
+        </div>
+        <div id="game" class="hidden">
+            <h2 id="game-title"></h2>
+            <div id="game-content"></div>
+            <button id="back-btn" class="btn hidden" onclick="goBack()">Terug naar Menu</button>
         </div>
     </div>
-    <script src="script-charades.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
