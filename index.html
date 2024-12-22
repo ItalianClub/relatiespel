@@ -21,26 +21,30 @@
 
         <!-- Analyse Sectie -->
         <div id="analysis-section" class="section hidden">
-            <h2>Analyse</h2>
-            <p>Wat voel je en waar voel je het?</p>
+            <h2>Wat voel je en waar voel je het?</h2>
             <form id="emotion-quiz">
-                <label>Welke emotie herken je het meest in jezelf?</label>
-                <select id="emotion-select">
-                    <option value="" disabled selected>Kies een emotie</option>
+                <label>Welke emoties herken je het meest in jezelf? (Selecteer er meerdere)</label>
+                <select id="emotion-select" multiple>
                     <option value="blij">Blij</option>
                     <option value="verdrietig">Verdrietig</option>
                     <option value="boos">Boos</option>
                     <option value="angstig">Angstig</option>
+                    <option value="onzeker">Onzeker</option>
+                    <option value="schuld">Schuld</option>
+                    <option value="jaloers">Jaloers</option>
+                    <option value="trots">Trots</option>
+                    <option value="enthousiast">Enthousiast</option>
                 </select>
-                <label>Waar in je lichaam voel je deze emotie?</label>
-                <select id="body-select">
-                    <option value="" disabled selected>Kies een plek</option>
+                <label>Waar in je lichaam voel je deze emoties?</label>
+                <select id="body-select" multiple>
                     <option value="hoofd">Hoofd</option>
                     <option value="borst">Borst</option>
                     <option value="buik">Buik</option>
                     <option value="schouders">Schouders</option>
+                    <option value="handen">Handen</option>
+                    <option value="benen">Benen</option>
                 </select>
-                <button type="button" id="emotion-submit" class="btn">Analyseer Emotie</button>
+                <button type="button" id="emotion-submit" class="btn">Analyseer Emoties</button>
             </form>
         </div>
 
