@@ -149,3 +149,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Naar de vorige dag
     buttons.prevDay.addEventListener("click", () => {
+        if (currentDay > 1) {
+            currentDay--;
+            saveProgress(); // Sla de voortgang op
+            loadDayContent();
+            showSection("checkIn");
+        }
+    });
+
+    // Reset de game
+    buttons.reset.addEventListener("click", () => {
+        currentDay = 1;
+        reflections = {};
+        localStorage.removeItem('reflections');
+        localStorage.removeItem('currentDay');
+        loadDayContent();
+        showSection("checkIn");
+    });
+
+    // Initieer de eerste dag
+    loadDayContent();
+});
