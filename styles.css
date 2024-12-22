@@ -1,27 +1,32 @@
 /* Algemene styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
     max-width: 900px;
-    margin: 50px auto;
+    width: 100%;
     padding: 20px;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
+    margin-top: 20px;
 }
 
 /* Koppen */
 h1 {
     color: #9c1925;
     font-size: 2.5em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 h2 {
@@ -30,11 +35,18 @@ h2 {
     margin-bottom: 15px;
 }
 
+/* Intro tekst */
+#intro-text {
+    font-size: 1.2em;
+    margin-bottom: 25px;
+    color: #666;
+}
+
 /* Tekstvelden en dropdowns */
 textarea, select {
     width: 100%;
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 12px;
     font-size: 1.1em;
     border: 1px solid #ccc;
     border-radius: 5px;
