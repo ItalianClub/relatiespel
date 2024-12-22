@@ -1,96 +1,118 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const totalDays = 14;
+    let currentDay = 1;
+
+    const sections = {
+        checkIn: document.getElementById("check-in-section"),
+        analysis: document.getElementById("analysis-section"),
+        exercise: document.getElementById("exercise-section"),
+        checkOut: document.getElementById("check-out-section"),
+        sleep: document.getElementById("sleep-section"),
+    };
+
+    const buttons = {
+        checkIn: document.getElementById("check-in-btn"),
+        next: document.getElementById("next-btn"),
+        completeExercise: document.getElementById("complete-exercise-btn"),
+        checkOut: document.getElementById("check-out-btn"),
+        nextDay: document.getElementById("next-day-btn"),
+        prevDay: document.getElementById("prev-day-btn"),
+    };
+
+    const progressIndicator = document.createElement("p");
+    progressIndicator.id = "progress-indicator";
+    progressIndicator.textContent = `Dag ${currentDay} van ${totalDays}`;
+    document.querySelector(".container").insertBefore(progressIndicator, sections.checkIn);
+
     const checkInPrompts = [
-        "Wat voel je nu in je borst? Hoe zou je dit omschrijven?",
-        "Hoe zwaar voelt je hoofd op een schaal van 1 tot 10?",
+        "Hoe voel je je nu? Beschrijf eventuele fysieke spanningen.",
+        "Welke emotie overheerst vandaag? Waar voel je dit in je lichaam?",
+        "Wat heeft je vandaag geraakt en hoe voelde dat?",
+        "Welke kleur beschrijft je stemming vandaag? Waarom?",
         "Waar voel je spanning in je lichaam?",
         "Hoe voelt je ademhaling op dit moment?",
-        "Als je lichaam een kleur zou hebben, welke kleur zou het nu zijn?",
-        "Beschrijf je energie als een batterij. Hoe vol is deze?",
-        "Voelt je buik zwaar, licht of neutraal?",
-        "Hoe voelen je handen? Warm, koud, gespannen?",
-        "Beschrijf je schouders. Zijn ze ontspannen of gespannen?",
-        "Als je voeten konden praten, wat zouden ze nu zeggen?",
-        "Voel je ergens tintelingen in je lichaam? Waar?",
-        "Hoe voelt je rug? Licht, zwaar of neutraal?",
-        "Beschrijf je ademhaling als een rivier. Hoe stroomt deze?",
+        "Voel je ergens tintelingen? Waar precies?",
+        "Welke gedachten hebben vandaag het meeste door je hoofd gespookt?",
+        "Waar voel je je energiek? Wat gaf je energie?",
+        "Welke situatie bracht vandaag stress? Waar voelde je dat?",
+        "Wat heeft je vandaag gelukkig gemaakt? Hoe voelde dat?",
+        "Welke emoties heb je vandaag genegeerd? Waar merk je dat aan?",
         "Hoe voelt je lichaam op dit moment als een geheel?",
+        "Wat zou je lichaam je vandaag vertellen als het kon praten?",
     ];
 
     const exercises = [
-        { title: "Ademruimte nemen", description: "Focus 3 minuten op je ademhaling. Wat merk je op? Beschrijf je ademhaling in woorden." },
-        { title: "Emotionele woordenlijst", description: "Kies 3 emoties uit een lijst en beschrijf waar je ze voelt in je lichaam." },
-        { title: "Spanning en ontspanning", description: "Span je schouders en laat los. Wat voel je tijdens de spanning en ontspanning?" },
-        { title: "Innerlijke stem", description: "Schrijf een gesprek op tussen jouw 'kalme ik' en jouw 'gestreste ik'." },
-        { title: "Ademhaling observeren", description: "Adem langzaam in en uit. Hoe verandert je lichaam tijdens deze oefening?" },
-        { title: "Emoties tekenen", description: "Teken hoe je je vandaag voelt. Gebruik kleuren en vormen." },
-        { title: "Fysieke scan", description: "Ga liggen en observeer je lichaam van hoofd tot teen. Waar voel je spanning?" },
-        { title: "Woordenschat uitbreiden", description: "Zoek 5 nieuwe woorden voor emoties en probeer deze te gebruiken in een zin." },
-        { title: "Lichaamstaal observeren", description: "Observeer jezelf in de spiegel. Wat zegt je lichaam vandaag?" },
-        { title: "Triggers onderzoeken", description: "Schrijf een situatie op die een sterke emotie opriep. Waar voelde je dit in je lichaam?" },
-        { title: "Dankbaarheid tonen", description: "Schrijf 3 dingen op waar je dankbaar voor bent en beschrijf hoe dat voelt." },
-        { title: "Schrijf je ademhaling op", description: "Beschrijf hoe je ademhaling aanvoelt in verschillende situaties." },
-        { title: "Complimenten geven", description: "Geef jezelf 3 complimenten. Wat voel je bij elk compliment?" },
-        { title: "Eindreflectie", description: "Wat heb je in de afgelopen dagen geleerd over je emoties en lichaam?" },
+        { title: "Emotionele Check-in", description: "Neem een moment om stil te zitten. Stel jezelf de vraag: Wat voel ik nu? Benoem één emotie en beschrijf waar je deze in je lichaam voelt." },
+        { title: "De Taal van Je Emoties", description: "Maak een lijst van emoties die je vandaag hebt gevoeld. Voor elke emotie: Waar voelde je deze in je lichaam? Koppel een herinnering aan deze emotie." },
+        { title: "Emoties Tekenen", description: "Kies een emotie die je vandaag hebt gevoeld. Teken deze emotie zonder woorden te gebruiken. Gebruik kleuren en vormen die voor jou passen." },
+        { title: "Lichaamsscan", description: "Scan je lichaam van je tenen tot je kruin. Stel jezelf de vraag: Wat voel ik in elk deel van mijn lichaam? Noteer de fysieke sensaties." },
+        { title: "Triggers Herkennen", description: "Schrijf een situatie op die een sterke emotie opriep. Wat was de aanleiding (trigger)? Hoe reageerde je op deze emotie?" },
+        { title: "Innerlijke Stem Dialoog", description: "Schrijf een gesprek op tussen jouw ‘kalme ik’ en jouw ‘emotionele ik’. Wat heeft je emotionele ik nodig?" },
+        { title: "Emoties in Kleur", description: "Kies een kleur die jouw stemming vandaag vertegenwoordigt. Schrijf waarom je voor deze kleur kiest." },
+        { title: "Dankbaarheid en Emotie", description: "Schrijf drie dingen op waar je vandaag dankbaar voor bent. Beschrijf hoe deze dingen je laten voelen." },
+        { title: "Spiegelwerk", description: "Kijk 5 minuten in de spiegel. Wat zegt je gezichtsuitdrukking over je emoties? Reflecteer op wat je ziet." },
+        { title: "Emotionele Overgang", description: "Denk aan een moment waarop je emotie veranderde. Wat was de aanleiding? Hoe voelde je je vóór en ná de verandering?" },
+        { title: "Jouw Emotionele Schatkaart", description: "Teken een lichaamssilhouet en markeer waar je emoties voelt. Welke plekken zijn vaak betrokken bij positieve of negatieve emoties?" },
+        { title: "Emotionele Woordenschat", description: "Kies een emotie die je vandaag voelde en zoek 3 synoniemen. Helpen deze woorden je beter te begrijpen wat je voelt?" },
+        { title: "Compassie voor Jezelf", description: "Schrijf een brief aan jezelf waarin je jouw emoties van vandaag erkent. Gebruik zinnen zoals: 'Het is oké dat ik me zo voelde'." },
+        { title: "Eindreflectie", description: "Kijk terug op de afgelopen 14 dagen. Wat heb je geleerd over je lichaam en gevoelens? Schrijf 3 manieren waarop je jezelf beter begrijpt." },
     ];
 
     const checkOutPrompts = [
-        "Wat voelde je in je lichaam tijdens de dag?",
-        "Welke emotie kwam het meest voor vandaag?",
-        "Waar voelde je rust in je lichaam?",
-        "Welke situatie gaf je energie?",
-        "Voelde je je ademhaling veranderen tijdens stress? Hoe?",
-        "Welke kleur had je stemming vandaag?",
-        "Voelde je spanning in je buik? Wanneer?",
-        "Hoe voelde je je schouders aan het einde van de dag?",
-        "Wat gaf je een glimlach vandaag? Hoe voelde dat?",
-        "Welke situatie maakte je emotioneel? Hoe voelde dat in je lichaam?",
-        "Waar voelde je kalmte? Hoe kun je dit vaker oproepen?",
-        "Voelde je verschil in ademhaling tijdens rustmomenten?",
-        "Welke beweging voelde goed vandaag?",
-        "Wat heb je geleerd over je lichaam en emoties?",
+        "Wat heb je vandaag geleerd over je lichaam en emoties?",
+        "Welke momenten brachten je rust of spanning?",
+        "Wat voelde je tijdens de oefening? Waar in je lichaam merkte je dat?",
+        "Welke gedachten hielpen je vandaag vooruit?",
+        "Hoe kun je morgen een moment van rust creëren?",
+        "Welke emoties herken je nu beter? Hoe voel je dat?",
+        "Wat gaf je vandaag een glimlach? Hoe voelde dat?",
+        "Waar voel je nu rust in je lichaam? Hoe kwam dat?",
+        "Welke situaties maakten je emotioneel? Waar voelde je dat?",
+        "Wat bracht je vandaag kalmte? Hoe kun je dat vaker oproepen?",
+        "Wat leerde je vandaag over je ademhaling?",
+        "Welke beweging voelde goed vandaag? Waarom?",
+        "Wat was het meest waardevolle inzicht van vandaag?",
+        "Hoe heeft deze dag je geholpen om te groeien?",
     ];
 
-    let currentDay = 0;
+    const loadDayContent = () => {
+        document.getElementById("check-in-prompt").textContent = checkInPrompts[currentDay - 1];
+        const exercise = exercises[currentDay - 1];
+        document.getElementById("exercise-title").textContent = exercise.title;
+        document.getElementById("exercise-description").textContent = exercise.description;
+        document.getElementById("check-out-prompt").textContent = checkOutPrompts[currentDay - 1];
+        document.getElementById("day-number").textContent = `Dag ${currentDay}`;
+        progressIndicator.textContent = `Dag ${currentDay} van ${totalDays}`;
+    };
 
-    const checkInPromptElement = document.getElementById("check-in-prompt");
-    const exerciseTitleElement = document.getElementById("exercise-title");
-    const exerciseDescriptionElement = document.getElementById("exercise-description");
-    const checkOutPromptElement = document.getElementById("check-out-prompt");
+    const showSection = (sectionId) => {
+        Object.values(sections).forEach(section => section.classList.add("hidden"));
+        document.getElementById(sectionId).classList.remove("hidden");
+    };
 
-    function loadDay() {
-        checkInPromptElement.textContent = checkInPrompts[currentDay % checkInPrompts.length];
-        const exercise = exercises[currentDay % exercises.length];
-        exerciseTitleElement.textContent = exercise.title;
-        exerciseDescriptionElement.textContent = exercise.description;
-        checkOutPromptElement.textContent = checkOutPrompts[currentDay % checkOutPrompts.length];
-    }
+    buttons.checkIn.addEventListener("click", () => showSection("analysis-section"));
+    buttons.next.addEventListener("click", () => showSection("exercise-section"));
+    buttons.completeExercise.addEventListener("click", () => showSection("check-out-section"));
+    buttons.checkOut.addEventListener("click", () => showSection("sleep-section"));
 
-    loadDay();
-
-    document.getElementById("check-in-btn").addEventListener("click", () => {
-        document.getElementById("check-in-section").classList.add("hidden");
-        document.getElementById("analysis-section").classList.remove("hidden");
+    buttons.nextDay.addEventListener("click", () => {
+        if (currentDay < totalDays) {
+            currentDay++;
+            loadDayContent();
+            showSection("check-in-section");
+        } else {
+            alert("Gefeliciteerd! Je hebt alle 14 dagen voltooid.");
+            buttons.nextDay.disabled = true;
+        }
     });
 
-    document.getElementById("next-btn").addEventListener("click", () => {
-        document.getElementById("analysis-section").classList.add("hidden");
-        document.getElementById("exercise-section").classList.remove("hidden");
+    buttons.prevDay.addEventListener("click", () => {
+        if (currentDay > 1) {
+            currentDay--;
+            loadDayContent();
+            showSection("check-in-section");
+        }
     });
 
-    document.getElementById("complete-exercise-btn").addEventListener("click", () => {
-        document.getElementById("exercise-section").classList.add("hidden");
-        document.getElementById("check-out-section").classList.remove("hidden");
-    });
-
-    document.getElementById("check-out-btn").addEventListener("click", () => {
-        document.getElementById("check-out-section").classList.add("hidden");
-        document.getElementById("sleep-section").classList.remove("hidden");
-    });
-
-    document.getElementById("next-day-btn").addEventListener("click", () => {
-        currentDay++;
-        loadDay();
-        document.getElementById("sleep-section").classList.add("hidden");
-        document.getElementById("check-in-section").classList.remove("hidden");
-    });
+    loadDayContent();
 });
