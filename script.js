@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         checkOut: document.getElementById("check-out-btn"),
         nextDay: document.getElementById("next-day-btn"),
         prevDay: document.getElementById("prev-day-btn"),
+        reset: document.getElementById("reset-btn"),
     };
 
     const checkInPrompts = [
@@ -39,35 +40,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const exercises = [
         { title: "Emotionele Check-in", description: "Neem een moment om stil te zitten. Stel jezelf de vraag: Wat voel ik nu? Benoem één emotie en beschrijf waar je deze in je lichaam voelt." },
         { title: "De Taal van Je Emoties", description: "Maak een lijst van emoties die je vandaag hebt gevoeld. Voor elke emotie: Waar voelde je deze in je lichaam? Koppel een herinnering aan deze emotie." },
-        { title: "Emoties Tekenen", description: "Kies een emotie die je vandaag hebt gevoeld. Teken deze emotie zonder woorden te gebruiken. Gebruik kleuren en vormen die voor jou passen." },
-        { title: "Lichaamsscan", description: "Scan je lichaam van je tenen tot je kruin. Stel jezelf de vraag: Wat voel ik in elk deel van mijn lichaam? Noteer de fysieke sensaties." },
-        { title: "Triggers Herkennen", description: "Schrijf een situatie op die een sterke emotie opriep. Wat was de aanleiding (trigger)? Hoe reageerde je op deze emotie?" },
-        { title: "Innerlijke Stem Dialoog", description: "Schrijf een gesprek op tussen jouw ‘kalme ik’ en jouw ‘emotionele ik’. Wat heeft je emotionele ik nodig?" },
-        { title: "Emoties in Kleur", description: "Kies een kleur die jouw stemming vandaag vertegenwoordigt. Schrijf waarom je voor deze kleur kiest." },
-        { title: "Dankbaarheid en Emotie", description: "Schrijf drie dingen op waar je vandaag dankbaar voor bent. Beschrijf hoe deze dingen je laten voelen." },
-        { title: "Spiegelwerk", description: "Kijk 5 minuten in de spiegel. Wat zegt je gezichtsuitdrukking over je emoties? Reflecteer op wat je ziet." },
-        { title: "Emotionele Overgang", description: "Denk aan een moment waarop je emotie veranderde. Wat was de aanleiding? Hoe voelde je je vóór en ná de verandering?" },
-        { title: "Jouw Emotionele Schatkaart", description: "Teken een lichaamssilhouet en markeer waar je emoties voelt. Welke plekken zijn vaak betrokken bij positieve of negatieve emoties?" },
-        { title: "Emotionele Woordenschat", description: "Kies een emotie die je vandaag voelde en zoek 3 synoniemen. Helpen deze woorden je beter te begrijpen wat je voelt?" },
-        { title: "Compassie voor Jezelf", description: "Schrijf een brief aan jezelf waarin je jouw emoties van vandaag erkent. Gebruik zinnen zoals: 'Het is oké dat ik me zo voelde'." },
-        { title: "Eindreflectie", description: "Kijk terug op de afgelopen 14 dagen. Wat heb je geleerd over je lichaam en gevoelens? Schrijf 3 manieren waarop je jezelf beter begrijpt." },
-    ];
-
-    const checkOutPrompts = [
-        "Wat heb je vandaag geleerd over je lichaam en emoties?",
-        "Welke momenten brachten je rust of spanning?",
-        "Wat voelde je tijdens de oefening? Waar in je lichaam merkte je dat?",
-        "Welke gedachten hielpen je vandaag vooruit?",
-        "Hoe kun je morgen een moment van rust creëren?",
-        "Welke emoties herken je nu beter? Hoe voel je dat?",
-        "Wat gaf je vandaag een glimlach? Hoe voelde dat?",
-        "Waar voel je nu rust in je lichaam? Hoe kwam dat?",
-        "Welke situaties maakten je emotioneel? Waar voelde je dat?",
-        "Wat bracht je vandaag kalmte? Hoe kun je dat vaker oproepen?",
-        "Wat leerde je vandaag over je ademhaling?",
-        "Welke beweging voelde goed vandaag? Waarom?",
-        "Wat was het meest waardevolle inzicht van vandaag?",
-        "Hoe heeft deze dag je geholpen om te groeien?",
+        { title: "Spanning Loslaten", description: "Span je spieren kort aan, laat los, en observeer wat je voelt in je lichaam." },
+        { title: "Diepe Ademhaling", description: "Adem diep in door je neus en langzaam uit door je mond. Focus op je ademhaling." },
+        { title: "Emotionele Woordenschat", description: "Zoek drie woorden die jouw emoties beschrijven. Probeer deze woorden in een zin te gebruiken." },
+        { title: "Triggers Herkennen", description: "Schrijf een situatie op die een sterke emotie opriep. Hoe reageerde je op deze emotie?" },
+        { title: "Kleur Je Emotie", description: "Kies een kleur die jouw stemming vandaag beschrijft. Schrijf waarom je deze kleur koos." },
+        { title: "Dankbaarheid Reflectie", description: "Schrijf drie dingen op waar je vandaag dankbaar voor bent. Hoe voelde dit in je lichaam?" },
+        { title: "Adem en Beweeg", description: "Doe een stretch of korte wandeling en let op hoe je ademhaling verandert." },
+        { title: "Schrijf Je Stress", description: "Schrijf drie dingen op die je stress bezorgen. Hoe voelt je lichaam als je hieraan denkt?" },
+        { title: "Spiegelreflectie", description: "Kijk 5 minuten in de spiegel. Wat zegt je gezichtsuitdrukking over je emoties?" },
+        { title: "Rust en Ontspanning", description: "Ga liggen, sluit je ogen en focus op je ademhaling. Laat gedachten passeren zonder oordeel." },
+        { title: "Zelfcompassie Brief", description: "Schrijf een brief aan jezelf waarin je je emoties erkent en jezelf ondersteunt." },
+        { title: "Eindreflectie", description: "Kijk terug op de afgelopen 14 dagen. Wat heb je geleerd over je emoties en lichaam?" },
     ];
 
     const validateInput = (inputId) => {
@@ -81,12 +65,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     };
 
+    const resetGame = () => {
+        currentDay = 1;
+        document.querySelectorAll("textarea").forEach(textarea => textarea.value = "");
+        loadDayContent();
+        showSection("check-in-section");
+    };
+
     const loadDayContent = () => {
         document.getElementById("check-in-prompt").textContent = checkInPrompts[currentDay - 1];
         const exercise = exercises[currentDay - 1];
         document.getElementById("exercise-title").textContent = exercise.title;
         document.getElementById("exercise-description").textContent = exercise.description;
-        document.getElementById("check-out-prompt").textContent = checkOutPrompts[currentDay - 1];
         document.getElementById("day-number").textContent = currentDay;
     };
 
@@ -97,36 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     buttons.checkIn.addEventListener("click", () => {
         if (validateInput("check-in-text")) {
-            const inputText = document.getElementById("check-in-text").value.trim();
-            const analysis = generateAnalysis(inputText);
-            document.getElementById("analysis-result").innerHTML = `
-                <h3>Psychologische Analyse:</h3>
-                <p>${analysis.psychological}</p>
-                <h3>Fysieke Analyse:</h3>
-                <p>${analysis.physical}</p>
-            `;
             showSection("analysis-section");
         }
     });
-
-    const generateAnalysis = (inputText) => {
-        if (inputText.includes("stress") || inputText.includes("spanning")) {
-            return {
-                psychological: "Je ervaart spanning. Dit kan wijzen op zorgen of overbelasting. Neem tijd om te ontspannen en je grenzen te herzien.",
-                physical: "Spanning kan zich vastzetten in je nek of schouders. Probeer een ademhalingsoefening of een korte wandeling.",
-            };
-        }
-        if (inputText.includes("blij") || inputText.includes("gelukkig")) {
-            return {
-                psychological: "Je ervaart vreugde. Reflecteer op wat dit gevoel veroorzaakt en probeer dit vaker te integreren in je dag.",
-                physical: "Geluk brengt ontspanning in je lichaam. Observeer hoe je ademhaling en spieren reageren.",
-            };
-        }
-        return {
-            psychological: "Je gevoelens zijn divers. Probeer te focussen op één emotie die het meest aanwezig is.",
-            physical: "Doe een lichaamsscan en kijk waar je spanning of ontspanning voelt.",
-        };
-    };
 
     buttons.next.addEventListener("click", () => showSection("exercise-section"));
 
@@ -145,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
             showSection("check-in-section");
         } else {
             alert("Gefeliciteerd! Je hebt alle 14 dagen voltooid!");
-            buttons.nextDay.disabled = true;
         }
     });
 
@@ -156,6 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
             showSection("check-in-section");
         }
     });
+
+    buttons.reset.addEventListener("click", resetGame);
 
     loadDayContent();
 });
