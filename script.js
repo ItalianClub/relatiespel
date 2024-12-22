@@ -90,6 +90,44 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('reflections', JSON.stringify(reflections)); // Bewaar de reflecties
     };
 
+    // Genereer een tussenstand na 2 dagen
+    const generateMidwayAnalysis = () => {
+        let emotionsSummary = [];
+        let bodyPartsSummary = [];
+        for (let day = 1; day <= currentDay; day++) {
+            const dayReflections = reflections[day];
+            if (dayReflections) {
+                emotionsSummary.push(dayReflections.emotions.join(", "));
+                bodyPartsSummary.push(dayReflections.bodyParts.join(", "));
+            }
+        }
+
+        return `
+            Na ${currentDay} dagen heb je de volgende emoties ervaren: ${emotionsSummary.join(", ")}.<br>
+            Deze emoties voelden zich in de volgende lichaamsdelen: ${bodyPartsSummary.join(", ")}.<br>
+            Emoties die vaak opduiken kunnen wijzen op terugkerende spanningen. Dit geeft mogelijk inzicht in welk gebied van je lichaam en geest extra aandacht behoeft.
+        `;
+    };
+
+    // Analyse na 14 dagen
+    const generateFinalAnalysis = () => {
+        let emotionsSummary = [];
+        let bodyPartsSummary = [];
+        for (let day = 1; day <= totalDays; day++) {
+            const dayReflections = reflections[day];
+            if (dayReflections) {
+                emotionsSummary.push(dayReflections.emotions.join(", "));
+                bodyPartsSummary.push(dayReflections.bodyParts.join(", "));
+            }
+        }
+
+        return `
+            Gedurende de 14 dagen heb je de volgende emoties ervaren: ${emotionsSummary.join(", ")}.<br>
+            Deze emoties werden vaak gevoeld in de volgende lichaamsdelen: ${bodyPartsSummary.join(", ")}.<br>
+            Deze reflecties geven je belangrijke inzichten over hoe je emoties zich fysiek manifesteren. Kijk naar terugkerende lichamelijke klachten, zoals spanning in bepaalde delen van je lichaam, en werk aan het loslaten van die spanningen.
+        `;
+    };
+
     // Check-in
     buttons.checkIn.addEventListener("click", () => {
         const input = document.getElementById("check-in-text").value.trim();
@@ -144,47 +182,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check-out
     buttons.checkOut.addEventListener("click", () => {
-        const input = document.getElementById("check-out-text").value.trim();
-        if (!input) return alert("Vul je reflectie in.");
-        reflections[currentDay].checkOut = input;
-        saveProgress(); // Sla voortgang op na check-out
-        showSection("sleep");
-    });
-
-    // Naar de volgende dag
-    buttons.nextDay.addEventListener("click", () => {
-        if (currentDay < totalDays) {
-            currentDay++;
-            saveProgress(); // Sla de voortgang op
-            loadDayContent();
-            showSection("checkIn");
-        } else {
-            alert("Gefeliciteerd! Je hebt alle dagen voltooid!");
-            const finalAnalysisText = finalAnalysis();
-            alert(finalAnalysisText); // Einde analyse na 14 dagen
-        }
-    });
-
-    // Naar de vorige dag
-    buttons.prevDay.addEventListener("click", () => {
-        if (currentDay > 1) {
-            currentDay--;
-            saveProgress(); // Sla de voortgang op
-            loadDayContent();
-            showSection("checkIn");
-        }
-    });
-
-    // Reset de game
-    buttons.reset.addEventListener("click", () => {
-        currentDay = 1;
-        reflections = {};
-        localStorage.removeItem('reflections');
-        localStorage.removeItem('currentDay');
-        loadDayContent();
-        showSection("checkIn");
-    });
-
-    // Initieer de eerste dag
-    loadDayContent();
-});
+        const input = document.getElementById("check-out-text").
