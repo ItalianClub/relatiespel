@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const dailyTask = document.getElementById("daily-task");
     const checkInBtn = document.getElementById("check-in-btn");
     const nextBtn = document.getElementById("next-btn");
+    const overviewBtn = document.getElementById("overview-btn");
+    const backBtn = document.getElementById("back-btn");
     const feedbackSection = document.getElementById("feedback-section");
     const checkInText = document.getElementById("check-in-text");
     const choiceContainer = document.getElementById("choice-container");
@@ -10,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const option2 = document.getElementById("option2");
     const taskTitle = document.getElementById("task-title");
     const taskDescription = document.getElementById("task-description");
+    const overviewPage = document.getElementById("overview-page");
+    const overviewContent = document.getElementById("overview-content");
 
     const tasks = [
         {
@@ -33,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     let currentDay = 0;
+    const checkIns = {}; // Opslag voor dagelijkse check-ins
 
     /**
      * Toon de dagelijkse check-in.
@@ -66,13 +71,16 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackSection.classList.remove("hidden");
         choiceContainer.classList.add("hidden");
         nextBtn.classList.remove("hidden");
+        overviewBtn.classList.remove("hidden");
     }
 
     /**
      * Dagelijkse check-in voltooien.
      */
     checkInBtn.addEventListener("click", () => {
-        if (checkInText.value.trim() !== "") {
+        const checkInValue = checkInText.value.trim();
+        if (checkInValue !== "") {
+            checkIns[`Dag ${currentDay + 1}`] = checkInValue;
             document.getElementById("daily-check-in").classList.add("hidden");
             loadTask();
         } else {
@@ -81,10 +89,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /**
-     * Keuze-opties logica.
+     * Toon overzicht van eerdere dagen.
      */
-    option1.addEventListener("click", () => showFeedback(option1.textContent));
-    option2.addEventListener("click", () => showFeedback(option2.textContent));
+    overviewBtn.addEventListener("click", () => {
+        overviewContent.innerHTML = "";
+        for (const [day, text] of Object.entries(checkIns)) {
+            overviewContent.innerHTML += `
+                <div class="day-entry">
+                    <strong>${day}:</strong>
+                    <p>${text}</p>
+                </div>`;
+        }
+        overviewPage.classList.remove("hidden");
+        dailyTask.classList.add("hidden");
+        feedbackSection.classList.add("hidden");
+        document.getElementById("daily-check-in").classList.add("hidden");
+        nextBtn.classList.add("hidden");
+        overviewBtn.classList.add("hidden");
+    });
+
+    /**
+     * Terug naar het spel.
+     */
+    backBtn.addEventListener("click", () => {
+        overviewPage.classList.add("hidden");
+        dailyTask.classList.remove("hidden");
+        nextBtn.classList.remove("hidden");
+        overviewBtn.classList.remove("hidden");
+    });
 
     /**
      * Volgende dag logica.
