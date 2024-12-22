@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotie-Charades</title>
+    <title>Relatie-Spel</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Emotie-Charades</h1>
-        <p>Beeld een emotie uit en laat je partner raden!</p>
+        <h1>Relatie-Spel</h1>
+        <p>Kies een opdracht en speel samen!</p>
         <div class="game-area">
-            <button id="start-btn" class="btn">Start Spel</button>
-            <div id="emotion-display" class="hidden">
-                <h2 id="emotion"></h2>
-                <button id="next-emotion" class="btn">Volgende Emotie</button>
-            </div>
-            <div id="result-display" class="hidden">
-                <h3 id="result"></h3>
-                <button id="restart-btn" class="btn">Opnieuw Spelen</button>
-            </div>
+            <label for="game-select">Kies een opdracht:</label>
+            <select id="game-select" class="dropdown">
+                <option value="charades">Emotie-Charades</option>
+                <option value="detective">De Emotie-Detective</option>
+                <option value="body-language">Het Lichaamstaal-Spel</option>
+            </select>
+            <button id="start-btn" class="btn">Start Gekozen Opdracht</button>
+        </div>
+        <div id="task-display" class="hidden">
+            <h2 id="task-title"></h2>
+            <p id="task-instructions"></p>
+            <button id="next-btn" class="btn hidden">Volgende Stap</button>
+            <button id="restart-btn" class="btn hidden">Opnieuw Kiezen</button>
         </div>
     </div>
     <script src="script.js"></script>
