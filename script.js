@@ -70,29 +70,15 @@ document.addEventListener("DOMContentLoaded", () => {
         "Hoe heeft deze dag je geholpen om te groeien?",
     ];
 
-    const generateAnalysis = (inputText) => {
-        const emotions = [
-            { keyword: "stress", psychological: "Je ervaart stress, wat vaak wordt veroorzaakt door hoge verwachtingen. Neem een moment om je grenzen te herzien.", physical: "Stress kan spanning in je nek, schouders en rug veroorzaken. Probeer ademhalingsoefeningen om dit los te laten." },
-            { keyword: "blij", psychological: "Blijdschap is een teken dat je in contact bent met iets dat belangrijk voor je is. Geniet hiervan en zoek manieren om dit vaker te ervaren.", physical: "Blijdschap kan ontspanning in je lichaam brengen. Observeer hoe dit voelt." },
-        ];
-
-        const foundEmotion = emotions.find(e => inputText.includes(e.keyword));
-        if (foundEmotion) {
-            return {
-                psychological: foundEmotion.psychological,
-                physical: foundEmotion.physical,
-            };
+    const validateInput = (inputId) => {
+        const inputField = document.getElementById(inputId);
+        if (!inputField.value.trim()) {
+            inputField.classList.add("error");
+            alert("Vul dit veld in om verder te gaan.");
+            return false;
         }
-
-        return {
-            psychological: "Je emoties lijken complex. Probeer ze in kleinere stukken op te delen en focus op één gevoel tegelijk.",
-            physical: "Doe een lichaamsscan om spanningen te identificeren. Dit kan je helpen meer bewustzijn te ontwikkelen.",
-        };
-    };
-
-    const updateNavigationButtons = () => {
-        buttons.prevDay.disabled = currentDay === 1;
-        buttons.nextDay.disabled = currentDay === totalDays;
+        inputField.classList.remove("error");
+        return true;
     };
 
     const loadDayContent = () => {
@@ -101,8 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("exercise-title").textContent = exercise.title;
         document.getElementById("exercise-description").textContent = exercise.description;
         document.getElementById("check-out-prompt").textContent = checkOutPrompts[currentDay - 1];
-        document.getElementById("progress-indicator").innerHTML = `Dag <span class="active">${currentDay}</span> van ${totalDays}`;
-        updateNavigationButtons();
+        document.getElementById("day-number").textContent = currentDay;
     };
 
     const showSection = (sectionId) => {
@@ -111,32 +96,56 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     buttons.checkIn.addEventListener("click", () => {
-        const inputText = document.getElementById("check-in-text").value.trim();
-        if (!inputText) {
-            alert("Vul je reflectie in om verder te gaan.");
-            return;
+        if (validateInput("check-in-text")) {
+            const inputText = document.getElementById("check-in-text").value.trim();
+            const analysis = generateAnalysis(inputText);
+            document.getElementById("analysis-result").innerHTML = `
+                <h3>Psychologische Analyse:</h3>
+                <p>${analysis.psychological}</p>
+                <h3>Fysieke Analyse:</h3>
+                <p>${analysis.physical}</p>
+            `;
+            showSection("analysis-section");
         }
-        const analysis = generateAnalysis(inputText);
-        document.getElementById("analysis-result").innerHTML = `
-            <h3>Psychologische Analyse:</h3>
-            <p>${analysis.psychological}</p>
-            <h3>Fysieke Analyse:</h3>
-            <p>${analysis.physical}</p>
-        `;
-        showSection("analysis-section");
     });
+
+    const generateAnalysis = (inputText) => {
+        if (inputText.includes("stress") || inputText.includes("spanning")) {
+            return {
+                psychological: "Je ervaart spanning. Dit kan wijzen op zorgen of overbelasting. Neem tijd om te ontspannen en je grenzen te herzien.",
+                physical: "Spanning kan zich vastzetten in je nek of schouders. Probeer een ademhalingsoefening of een korte wandeling.",
+            };
+        }
+        if (inputText.includes("blij") || inputText.includes("gelukkig")) {
+            return {
+                psychological: "Je ervaart vreugde. Reflecteer op wat dit gevoel veroorzaakt en probeer dit vaker te integreren in je dag.",
+                physical: "Geluk brengt ontspanning in je lichaam. Observeer hoe je ademhaling en spieren reageren.",
+            };
+        }
+        return {
+            psychological: "Je gevoelens zijn divers. Probeer te focussen op één emotie die het meest aanwezig is.",
+            physical: "Doe een lichaamsscan en kijk waar je spanning of ontspanning voelt.",
+        };
+    };
 
     buttons.next.addEventListener("click", () => showSection("exercise-section"));
 
     buttons.completeExercise.addEventListener("click", () => showSection("check-out-section"));
 
-    buttons.checkOut.addEventListener("click", () => showSection("sleep-section"));
+    buttons.checkOut.addEventListener("click", () => {
+        if (validateInput("check-out-text")) {
+            showSection("sleep-section");
+        }
+    });
 
     buttons.nextDay.addEventListener("click", () => {
         if (currentDay < totalDays) {
             currentDay++;
             loadDayContent();
             showSection("check-in-section");
+        } else {
+            alert("Gefeliciteerd! Je hebt alle 14 dagen voltooid!");
+            buttons.nextDay.disabled = true;
         }
     });
 
