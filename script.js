@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sections = {
         checkIn: document.getElementById("check-in-section"),
         analysis: document.getElementById("analysis-section"),
+        emotionSummary: document.getElementById("emotion-summary"),
         exercise: document.getElementById("exercise-section"),
         checkOut: document.getElementById("check-out-section"),
         sleep: document.getElementById("sleep-section"),
@@ -14,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const buttons = {
         checkIn: document.getElementById("check-in-btn"),
         emotionSubmit: document.getElementById("emotion-submit"),
+        proceedToExercise: document.getElementById("proceed-to-exercise"),
         completeExercise: document.getElementById("complete-exercise-btn"),
         checkOut: document.getElementById("check-out-btn"),
         nextDay: document.getElementById("next-day-btn"),
@@ -38,40 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
         "Wat leerde je over jezelf?",
     ];
 
-    const exercises = [
-        {
-            title: "Emotie Observeren",
-            description: "Schrijf drie emoties op die je vandaag hebt ervaren. Kies er één en beschrijf waar je deze in je lichaam voelde.",
-        },
-        {
-            title: "Ademhalingsoefening",
-            description: "Adem diep in en langzaam uit gedurende 5 minuten. Observeer hoe je ademhaling je lichaam beïnvloedt.",
-        },
-        {
-            title: "Dankbaarheid",
-            description: "Schrijf drie dingen op waar je vandaag dankbaar voor bent en reflecteer op hoe dat voelt in je lichaam.",
-        },
-        {
-            title: "Lichaamsscan",
-            description: "Scan je lichaam van top tot teen. Waar voel je spanning of ontspanning?",
-        },
-        {
-            title: "Spanning Loslaten",
-            description: "Span gedurende 5 seconden al je spieren aan en laat dan los. Observeer het verschil in spanning.",
-        },
-        {
-            title: "Moment van Blijdschap",
-            description: "Herinner je een moment van blijdschap. Wat voelde je en waar in je lichaam voelde je dat?",
-        },
-        {
-            title: "Triggers Herkennen",
-            description: "Identificeer een situatie die spanning veroorzaakte. Wat was de trigger en hoe voelde je lichaam?",
-        },
-        {
-            title: "Balans Creëren",
-            description: "Schrijf drie dingen op die balans in je dag brachten en reflecteer hoe je lichaam reageert.",
-        },
-    ];
+    const bodyPartExercises = {
+        hoofd: "Plaats je handen zachtjes op je hoofd. Masseer je slapen in cirkelvormige bewegingen en adem langzaam in en uit.",
+        borst: "Leg je handen op je borst. Adem diep in, houd je adem 3 seconden vast en adem langzaam uit. Observeer de spanning.",
+        buik: "Ga zitten en plaats je handen op je buik. Adem diep in en uit, voel je buik op en neer bewegen.",
+        schouders: "Span je schouders op naar je oren, houd dit 5 seconden vast en laat ze vervolgens los met een diepe uitademing.",
+        handen: "Schud je handen zachtjes uit. Span ze stevig in een vuist en laat daarna los. Herhaal 5 keer.",
+        benen: "Strek je benen uit en beweeg je tenen. Focus op ontspanning in je onderlichaam.",
+    };
 
     const showSection = (id) => {
         Object.values(sections).forEach((section) => section.classList.add("hidden"));
@@ -101,10 +77,19 @@ document.addEventListener("DOMContentLoaded", () => {
         reflections[currentDay].emotions = selectedEmotions;
         reflections[currentDay].bodyParts = selectedBodyParts;
 
-        const dominantEmotion = selectedEmotions[0]; // Kies de eerste als leidend
-        document.getElementById("exercise-title").textContent = `Focus op ${dominantEmotion}`;
-        document.getElementById("exercise-description").textContent = `Reflecteer op hoe ${dominantEmotion} je dag heeft beïnvloed en hoe je dit in je ${selectedBodyParts.join(', ')} voelde.`;
+        const summaryText = `
+            Je hebt de volgende emoties geselecteerd: ${selectedEmotions.join(", ")}.
+            Je voelt deze emoties in: ${selectedBodyParts.join(", ")}.
+        `;
+        document.getElementById("summary-description").textContent = summaryText;
+        showSection("emotionSummary");
+    });
 
+    buttons.proceedToExercise.addEventListener("click", () => {
+        const bodyParts = reflections[currentDay].bodyParts;
+        const exercises = bodyParts.map(part => bodyPartExercises[part]).join(" ");
+        document.getElementById("exercise-title").textContent = "Lichaamsgerichte Oefening";
+        document.getElementById("exercise-description").textContent = exercises;
         showSection("exercise");
     });
 
