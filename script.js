@@ -2,10 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalDays = 14;
     let currentDay = 1;
     let reflections = {}; // Opslag voor reflecties per dag
-    let emotionalGrowth = []; // Opslag voor emotionele groei
-    let bodyTension = []; // Opslag voor lichamelijke spanning
 
-    // Controleer of de voortgang al bestaat in localStorage
+    // Herstellen van de opgeslagen voortgang in localStorage
     if (localStorage.getItem('currentDay')) {
         currentDay = parseInt(localStorage.getItem('currentDay'));
         reflections = JSON.parse(localStorage.getItem('reflections')) || {};
@@ -68,38 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("day-number").textContent = currentDay;
     };
 
-    // Korte emotionele analyse na 2 dagen
-    const shortAnalysis = (day) => {
-        if (day % 2 === 0) {
-            const checkInReflection = reflections[day].checkIn;
-            const emotions = reflections[day].emotions;
-            const bodyParts = reflections[day].bodyParts;
-
-            const morningEmotions = emotions.join(", ");
-            const eveningEmotions = bodyParts.join(", ");
-
-            return `Op dag ${day} heb je je emoties als volgt ervaren: 'Ochtend emoties: ${morningEmotions}' en 'Avond emoties: ${eveningEmotions}'.`;
-        }
-        return '';
-    };
-
-    // Emotionele groei na een week
-    const emotionalGrowthAnalysis = () => {
-        return `
-            Na een week is er sprake van groei in emotionele zelfkennis en lichaamsbewustzijn. 
-            Je hebt verschillende emoties leren herkennen en reflecteren, maar ook belangrijke knelpunten zoals spanning in je schouders en angstbeheersing werden duidelijk.
-            Blijf de link tussen emoties en lichamelijke sensaties onderzoeken.
-        `;
-    };
-
-    // Analyse na 14 dagen
-    const finalAnalysis = () => {
-        return `
-            Na 14 dagen reflectie en emotieherkenning, is er een duidelijke vooruitgang zichtbaar in je emotionele groei en lichaamsbewustzijn. 
-            Je hebt bepaalde traumas en onderliggende emoties geidentificeerd, zoals stress in je buik en vastgezette boosheid in je schouders. 
-            Je hebt geleerd om te werken met je emoties door middel van phygosomatische oefeningen zoals ademhaling en ontspanning. 
-            Het is tijd om verder te werken aan het loslaten van spanning, door je focus te richten op diepe ademhaling en ontspanning van het hele lichaam.
-        `;
+    // Sla de voortgang op in localStorage
+    const saveProgress = () => {
+        localStorage.setItem('currentDay', currentDay); // Bewaar de huidige dag
+        localStorage.setItem('reflections', JSON.stringify(reflections)); // Bewaar de reflecties
     };
 
     // Check-in
@@ -107,8 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.getElementById("check-in-text").value.trim();
         if (!input) return alert("Vul je reflectie in.");
         reflections[currentDay] = { checkIn: input };
-        // Sla reflecties op in localStorage
-        localStorage.setItem('reflections', JSON.stringify(reflections));
+        saveProgress(); // Sla voortgang op na elke check-in
         showSection("analysis");
     });
 
@@ -130,8 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Je voelt deze emoties in: ${selectedBodyParts.join(", ")}.
         `;
         document.getElementById("summary-description").innerHTML = summaryText;
-        // Sla reflecties op in localStorage
-        localStorage.setItem('reflections', JSON.stringify(reflections));
+        saveProgress(); // Sla voortgang op na analyse
         showSection("emotionSummary");
     });
 
@@ -161,8 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.getElementById("check-out-text").value.trim();
         if (!input) return alert("Vul je reflectie in.");
         reflections[currentDay].checkOut = input;
-        // Sla reflecties op in localStorage
-        localStorage.setItem('reflections', JSON.stringify(reflections));
+        saveProgress(); // Sla voortgang op na check-out
         showSection("sleep");
     });
 
@@ -170,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.nextDay.addEventListener("click", () => {
         if (currentDay < totalDays) {
             currentDay++;
-            localStorage.setItem('currentDay', currentDay); // Sla de huidige dag op in localStorage
+            saveProgress(); // Sla de voortgang op
             loadDayContent();
             showSection("checkIn");
         } else {
@@ -178,40 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const finalAnalysisText = finalAnalysis();
             alert(finalAnalysisText); // Einde analyse na 14 dagen
         }
-
-        // Na 2 dagen een korte analyse tonen
-        if (currentDay % 2 === 0) {
-            const analysisText = shortAnalysis(currentDay);
-            alert(analysisText); // Eenvoudige analyse na 2 dagen
-        }
-
-        // Na 7 dagen een emotionele groei-analyse tonen
-        if (currentDay === 7) {
-            const growthAnalysis = emotionalGrowthAnalysis();
-            alert(growthAnalysis); // Emotionele groei-analyse na een week
-        }
     });
 
     // Naar de vorige dag
     buttons.prevDay.addEventListener("click", () => {
-        if (currentDay > 1) {
-            currentDay--;
-            localStorage.setItem('currentDay', currentDay); // Sla de huidige dag op in localStorage
-            loadDayContent();
-            showSection("checkIn");
-        }
-    });
-
-    // Reset de game
-    buttons.reset.addEventListener("click", () => {
-        currentDay = 1;
-        reflections = {};
-        localStorage.removeItem('reflections');
-        localStorage.removeItem('currentDay');
-        loadDayContent();
-        showSection("checkIn");
-    });
-
-    // Initieer de eerste dag
-    loadDayContent();
-});
