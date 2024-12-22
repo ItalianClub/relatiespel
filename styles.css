@@ -17,7 +17,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Schaduw voor diepte */
 }
 
-/* Titel en tekst */
 h1 {
     font-size: 2em; /* Grote titel */
     color: #9c1925; /* Italiaanse roodtint */
@@ -30,7 +29,6 @@ p {
     line-height: 1.6; /* Betere leesbaarheid */
 }
 
-/* Tekstvelden */
 textarea {
     width: 100%; /* Tekstvak vult de breedte */
     height: 100px; /* Voldoende ruimte voor tekst */
@@ -47,7 +45,6 @@ textarea::placeholder {
     color: #aaa; /* Lichte kleur voor de placeholder tekst */
 }
 
-/* Knoppen */
 .btn {
     padding: 10px 20px;
     font-size: 1em;
@@ -65,23 +62,16 @@ textarea::placeholder {
     transform: scale(1.05); /* Lichte vergroting bij hover */
 }
 
-/* Verberg elementen */
 .hidden {
-    display: none;
+    display: none; /* Verbergt elementen */
 }
 
-/* Feedback styling */
 #daily-task p {
     font-size: 1.1em;
     margin-bottom: 10px;
     color: #555; /* Zachte grijze kleur */
 }
 
-#daily-task h2 {
-    color: #9c1925;
-}
-
-/* Mobiele styling */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
