@@ -1,59 +1,92 @@
 // script.js
 
-// Array met emoties
-const emotions = [
-    "Blij maar zenuwachtig",
-    "Gefrustreerd door de vaatwasser",
-    "Boos maar stil",
-    "Ongemakkelijk blij",
-    "Ontroerd door een lief gebaar",
-    "Verward over een vraag",
-    "Heel enthousiast over een idee",
-];
+// Beschikbare opdrachten
+const tasks = {
+    charades: {
+        title: "Emotie-Charades",
+        instructions: [
+            "Beeld een emotie uit die je partner moet raden.",
+            "Klik op 'Volgende Stap' om een nieuwe emotie te krijgen.",
+            "Gefeliciteerd, jullie hebben alle emoties gespeeld!"
+        ],
+        steps: [
+            "Blij maar zenuwachtig",
+            "Boos maar stil",
+            "Heel enthousiast over een idee"
+        ],
+    },
+    detective: {
+        title: "De Emotie-Detective",
+        instructions: [
+            "Observeer de emoties van je partner en maak een notitie.",
+            "Bespreek aan het einde van de dag je observaties.",
+            "Gefeliciteerd, jullie zijn nu emotiedetectives!"
+        ],
+        steps: ["Observeer je partner", "Maak aantekeningen", "Bespreek samen"],
+    },
+    "body-language": {
+        title: "Het Lichaamstaal-Spel",
+        instructions: [
+            "Boots het typische gedrag van je partner na.",
+            "Laat je partner raden wat je probeert uit te beelden.",
+            "Gefeliciteerd, jullie kennen elkaars signalen beter!"
+        ],
+        steps: ["Kies een houding", "Doe deze na", "Bespreek samen"],
+    },
+};
 
-let currentEmotionIndex = 0;
-
-// Selectie van HTML-elementen
+// HTML-elementen
+const gameSelect = document.getElementById("game-select");
 const startBtn = document.getElementById("start-btn");
-const emotionDisplay = document.getElementById("emotion-display");
-const emotionText = document.getElementById("emotion");
-const nextEmotionBtn = document.getElementById("next-emotion");
-const resultDisplay = document.getElementById("result-display");
-const resultText = document.getElementById("result");
+const taskDisplay = document.getElementById("task-display");
+const taskTitle = document.getElementById("task-title");
+const taskInstructions = document.getElementById("task-instructions");
+const nextBtn = document.getElementById("next-btn");
 const restartBtn = document.getElementById("restart-btn");
 
-// Start het spel
+let currentTask = null;
+let currentStep = 0;
+
+// Start de gekozen opdracht
 startBtn.addEventListener("click", () => {
-    startBtn.classList.add("hidden");
-    emotionDisplay.classList.remove("hidden");
-    showEmotion();
+    const selectedTask = gameSelect.value;
+    currentTask = tasks[selectedTask];
+    currentStep = 0;
+    displayTask();
 });
 
-// Toon de huidige emotie
-function showEmotion() {
-    if (currentEmotionIndex < emotions.length) {
-        emotionText.textContent = emotions[currentEmotionIndex];
+// Toon de opdracht
+function displayTask() {
+    if (!currentTask) return;
+
+    taskDisplay.classList.remove("hidden");
+    taskTitle.textContent = currentTask.title;
+    taskInstructions.textContent = currentTask.instructions[currentStep];
+
+    // Knoppen logica
+    if (currentStep < currentTask.steps.length - 1) {
+        nextBtn.classList.remove("hidden");
+        restartBtn.classList.add("hidden");
     } else {
-        endGame();
+        nextBtn.classList.add("hidden");
+        restartBtn.classList.remove("hidden");
     }
 }
 
-// Naar de volgende emotie
-nextEmotionBtn.addEventListener("click", () => {
-    currentEmotionIndex++;
-    showEmotion();
+// Volgende stap in de opdracht
+nextBtn.addEventListener("click", () => {
+    if (currentStep < currentTask.steps.length - 1) {
+        currentStep++;
+        taskInstructions.textContent = currentTask.instructions[currentStep];
+    } else {
+        nextBtn.classList.add("hidden");
+        restartBtn.classList.remove("hidden");
+    }
 });
-
-// Spel beëindigen
-function endGame() {
-    emotionDisplay.classList.add("hidden");
-    resultDisplay.classList.remove("hidden");
-    resultText.textContent = "Goed gedaan! Jullie hebben alle emoties gespeeld!";
-}
 
 // Opnieuw starten
 restartBtn.addEventListener("click", () => {
-    currentEmotionIndex = 0;
-    resultDisplay.classList.add("hidden");
-    startBtn.classList.remove("hidden");
+    taskDisplay.classList.add("hidden");
+    currentTask = null;
+    currentStep = 0;
 });
