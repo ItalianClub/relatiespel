@@ -20,6 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
         reset: document.getElementById("reset-btn"),
     };
 
+    // Data opslag voor analyses en reflecties
+    const data = Array(totalDays).fill(null).map(() => ({
+        checkIn: "",
+        analysis: "",
+        checkOut: "",
+    }));
+
     const checkInPrompts = [
         "Hoe voel je je nu? Beschrijf eventuele fysieke spanningen.",
         "Welke emotie overheerst vandaag? Waar voel je dit in je lichaam?",
@@ -37,22 +44,35 @@ document.addEventListener("DOMContentLoaded", () => {
         "Wat zou je lichaam je vandaag vertellen als het kon praten?",
     ];
 
-    const exercises = [
-        { title: "Emotionele Check-in", description: "Neem een moment om stil te zitten. Stel jezelf de vraag: Wat voel ik nu? Benoem één emotie en beschrijf waar je deze in je lichaam voelt." },
-        { title: "De Taal van Je Emoties", description: "Maak een lijst van emoties die je vandaag hebt gevoeld. Voor elke emotie: Waar voelde je deze in je lichaam? Koppel een herinnering aan deze emotie." },
-        { title: "Spanning Loslaten", description: "Span je spieren kort aan, laat los, en observeer wat je voelt in je lichaam." },
-        { title: "Diepe Ademhaling", description: "Adem diep in door je neus en langzaam uit door je mond. Focus op je ademhaling." },
-        { title: "Emotionele Woordenschat", description: "Zoek drie woorden die jouw emoties beschrijven. Probeer deze woorden in een zin te gebruiken." },
-        { title: "Triggers Herkennen", description: "Schrijf een situatie op die een sterke emotie opriep. Hoe reageerde je op deze emotie?" },
-        { title: "Kleur Je Emotie", description: "Kies een kleur die jouw stemming vandaag beschrijft. Schrijf waarom je deze kleur koos." },
-        { title: "Dankbaarheid Reflectie", description: "Schrijf drie dingen op waar je vandaag dankbaar voor bent. Hoe voelde dit in je lichaam?" },
-        { title: "Adem en Beweeg", description: "Doe een stretch of korte wandeling en let op hoe je ademhaling verandert." },
-        { title: "Schrijf Je Stress", description: "Schrijf drie dingen op die je stress bezorgen. Hoe voelt je lichaam als je hieraan denkt?" },
-        { title: "Spiegelreflectie", description: "Kijk 5 minuten in de spiegel. Wat zegt je gezichtsuitdrukking over je emoties?" },
-        { title: "Rust en Ontspanning", description: "Ga liggen, sluit je ogen en focus op je ademhaling. Laat gedachten passeren zonder oordeel." },
-        { title: "Zelfcompassie Brief", description: "Schrijf een brief aan jezelf waarin je je emoties erkent en jezelf ondersteunt." },
-        { title: "Eindreflectie", description: "Kijk terug op de afgelopen 14 dagen. Wat heb je geleerd over je emoties en lichaam?" },
-    ];
+    const generateAnalysis = (inputText) => {
+        const lowerInput = inputText.toLowerCase();
+
+        if (lowerInput.includes("spanning") || lowerInput.includes("schouders")) {
+            return {
+                psychological: "Spanning in je schouders wijst vaak op stress of het gevoel te veel verantwoordelijkheid te dragen. Probeer een reflectieve vraag zoals: 'Wat kan ik vandaag loslaten om meer rust te vinden?'",
+                physical: "Druk in je schouders kan wijzen op lichamelijke stress. Probeer een ademhalingsoefening of lichte stretches om dit te verlichten.",
+            };
+        }
+
+        if (lowerInput.includes("druk") && lowerInput.includes("oren")) {
+            return {
+                psychological: "Druk achter je oren kan verband houden met opgebouwde spanning en het gevoel dat je je overweldigd voelt. Vraag jezelf af: 'Wat kan ik nu doen om dit te verlichten?'",
+                physical: "Dit kan te maken hebben met spanning in je nek. Probeer je nek voorzichtig te bewegen en ademhalingsoefeningen te doen.",
+            };
+        }
+
+        if (lowerInput.includes("blij") || lowerInput.includes("gelukkig")) {
+            return {
+                psychological: "Je ervaart vreugde, wat een belangrijk signaal is dat je in contact bent met iets dat je energie geeft. Reflecteer: 'Hoe kan ik meer van deze momenten creëren?'",
+                physical: "Blijdschap ontspant je spieren en kan je ademhaling verdiepen. Observeer hoe dit je lichaam positief beïnvloedt.",
+            };
+        }
+
+        return {
+            psychological: "Je gevoelens zijn divers en vragen om nadere verkenning. Probeer een dagboek bij te houden met gedetailleerde observaties van je emoties.",
+            physical: "Doe een volledige lichaamsscan om spanning of ontspanning in verschillende delen van je lichaam te identificeren.",
+        };
+    };
 
     const validateInput = (inputId) => {
         const inputField = document.getElementById(inputId);
@@ -67,6 +87,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const resetGame = () => {
         currentDay = 1;
+        data.forEach(dayData => {
+            dayData.checkIn = "";
+            dayData.analysis = "";
+            dayData.checkOut = "";
+        });
         document.querySelectorAll("textarea").forEach(textarea => textarea.value = "");
         loadDayContent();
         showSection("check-in-section");
@@ -74,10 +99,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const loadDayContent = () => {
         document.getElementById("check-in-prompt").textContent = checkInPrompts[currentDay - 1];
-        const exercise = exercises[currentDay - 1];
-        document.getElementById("exercise-title").textContent = exercise.title;
-        document.getElementById("exercise-description").textContent = exercise.description;
         document.getElementById("day-number").textContent = currentDay;
+
+        const currentData = data[currentDay - 1];
+        document.getElementById("check-in-text").value = currentData.checkIn || "";
+        document.getElementById("check-out-text").value = currentData.checkOut || "";
     };
 
     const showSection = (sectionId) => {
@@ -87,6 +113,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     buttons.checkIn.addEventListener("click", () => {
         if (validateInput("check-in-text")) {
+            const inputText = document.getElementById("check-in-text").value.trim();
+            const analysis = generateAnalysis(inputText);
+
+            data[currentDay - 1].checkIn = inputText;
+            data[currentDay - 1].analysis = analysis;
+
+            document.getElementById("analysis-result").innerHTML = `
+                <h3>Psychologische Analyse:</h3>
+                <p>${analysis.psychological}</p>
+                <h3>Fysieke Analyse:</h3>
+                <p>${analysis.physical}</p>
+            `;
             showSection("analysis-section");
         }
     });
@@ -97,6 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     buttons.checkOut.addEventListener("click", () => {
         if (validateInput("check-out-text")) {
+            const checkOutText = document.getElementById("check-out-text").value.trim();
+            data[currentDay - 1].checkOut = checkOutText;
+
             showSection("sleep-section");
         }
     });
