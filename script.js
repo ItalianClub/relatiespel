@@ -31,7 +31,25 @@ document.addEventListener("DOMContentLoaded", () => {
         reset: document.getElementById("reset-btn"),
     };
 
-    // Emotiegerichte oefeningen
+    // Reflectie prompts voor 14 dagen
+    const reflectionPrompts = [
+        "Hoe voel je je vandaag? Wat overheerst er in je lichaam?",
+        "Herken je een emotie vandaag? Waar voel je deze in je lichaam?",
+        "Welke situatie bracht stress vandaag? Hoe voel je je daarover?",
+        "Wat maakt je blij vandaag? Hoe merk je dat in je lichaam?",
+        "Ben je ergens boos over? Waar voel je dat in je lichaam?",
+        "Wat maakt je onzeker vandaag? Wat zegt je lichaam hierover?",
+        "Welke emoties heb je vandaag ervaren? Waar in je lichaam merk je deze?",
+        "Voel je ergens spanning? Hoe kun je deze spanning loslaten?",
+        "Wat heeft je gelukkig gemaakt? Hoe voelde je dat in je lichaam?",
+        "Wat zou je vandaag willen veranderen in je reacties op emoties?",
+        "Welke lichamelijke sensaties merk je? Wat zeggen ze over je emotie?",
+        "Wat is je grootste uitdaging op dit moment? Hoe voelt dat lichamelijk?",
+        "Heb je je vandaag ontspannen? Wat zou je willen verbeteren?",
+        "Hoe zou je jezelf vandaag kunnen steunen in het omgaan met emoties?"
+    ];
+
+    // Emotiegerichte oefeningen per dag
     const emotionExercises = {
         blij: "Schrijf op wat je vreugde bracht vandaag. Hoe kun je meer van deze momenten creëren?",
         verdrietig: "Sta stil bij wat je verdrietig maakt. Schrijf op wat je zou willen zeggen als je dit kon uiten.",
@@ -62,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Daginhoud laden
     const loadDayContent = () => {
-        document.getElementById("check-in-prompt").textContent = `Dag ${currentDay}: Hoe voel je je? Beschrijf je emoties en fysieke toestand.`;
+        document.getElementById("check-in-prompt").textContent = reflectionPrompts[currentDay - 1];
         document.getElementById("day-number").textContent = currentDay;
     };
 
