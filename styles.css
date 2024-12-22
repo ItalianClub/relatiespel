@@ -1,4 +1,4 @@
- /* Algemene styling */
+/* Algemene styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
@@ -160,4 +160,4 @@ textarea:focus, select:focus {
     color: red;
     font-size: 1.1em;
     margin-top: 20px;
-}  
+}
