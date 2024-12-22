@@ -55,11 +55,6 @@ textarea:focus {
     outline: none;
 }
 
-/* Invalid input */
-textarea.error {
-    border-color: red !important;
-}
-
 /* Knoppen */
 .btn {
     display: inline-block;
@@ -90,12 +85,6 @@ textarea.error {
     display: none;
 }
 
-/* Navigatie */
-.navigation {
-    margin-top: 20px;
-    text-align: center;
-}
-
 /* Voortgangsindicator */
 #progress-indicator {
     font-size: 1.2em;
@@ -103,7 +92,7 @@ textarea.error {
     margin-bottom: 20px;
 }
 
-#progress-indicator span.active {
+#progress-indicator span {
     font-weight: bold;
     color: #9c1925;
 }
@@ -138,6 +127,12 @@ textarea.error {
     background-color: #555;
     color: white;
     font-weight: bold;
+}
+
+/* Toetsenbordtoegankelijkheid */
+.btn:focus {
+    outline: 2px solid #9c1925;
+    outline-offset: 2px;
 }
 
 /* Responsief ontwerp */
