@@ -35,6 +35,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentDay = 0;
 
     /**
+     * Toon de dagelijkse check-in.
+     */
+    function showCheckIn() {
+        document.getElementById("daily-check-in").classList.remove("hidden");
+        dailyTask.classList.add("hidden");
+        feedbackSection.classList.add("hidden");
+    }
+
+    /**
      * Laad de opdracht voor de dag.
      */
     function loadTask() {
@@ -60,11 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /**
-     * Dagelijkse check-in.
+     * Dagelijkse check-in voltooien.
      */
     checkInBtn.addEventListener("click", () => {
         if (checkInText.value.trim() !== "") {
-            dailyTask.classList.remove("hidden");
             document.getElementById("daily-check-in").classList.add("hidden");
             loadTask();
         } else {
@@ -81,30 +89,12 @@ document.addEventListener("DOMContentLoaded", () => {
     /**
      * Volgende dag logica.
      */
-    nextBtn.addEventListener("click", goToNextDay);
-
-    /**
-     * Enter-toets als knop.
-     */
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            if (!dailyTask.classList.contains("hidden") && !choiceContainer.classList.contains("hidden")) {
-                showFeedback(option1.textContent); // Standaard keuze bij Enter
-            } else if (!nextBtn.classList.contains("hidden")) {
-                goToNextDay();
-            }
-        }
+    nextBtn.addEventListener("click", () => {
+        currentDay++;
+        checkInText.value = ""; // Reset de check-in voor de volgende dag
+        showCheckIn();
     });
 
-    /**
-     * Ga naar de volgende dag.
-     */
-    function goToNextDay() {
-        currentDay++;
-        loadTask();
-        nextBtn.classList.add("hidden");
-    }
-
-    // Begin spel
-    loadTask();
+    // Begin spel met de check-in
+    showCheckIn();
 });
