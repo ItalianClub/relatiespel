@@ -182,4 +182,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check-out
     buttons.checkOut.addEventListener("click", () => {
-        const input = document.getElementById("check-out-text").
+        const input = document.getElementById("check-out-text").value.trim();
+        if (!input) return alert("Vul je reflectie in.");
+        reflections[currentDay].checkOut = input;
+        saveProgress(); // Sla voortgang op na check-out
+        showSection("sleep");
+    });
+
+    // Naar de volgende dag
+    buttons.nextDay.addEventListener("click", () => {
+        if (currentDay < totalDays) {
+            currentDay++;
+            saveProgress(); // Sla de voortgang op
+            loadDayContent();
+            showSection("checkIn");
+
+            // Tussenanalyse na elke 2 dagen
+            if (currentDay % 2 === 0) {
+                const midwayAnalysis = generateMidwayAnalysis();
+                alert(midwayAnalysis); // Toon tussenanalyse
+            }
+
+            // Eindanalyse na 14 dagen
+            if (currentDay === totalDays) {
+                const finalAnalysis = generateFinalAnalysis();
+                alert(finalAnalysis); // Toon eindanalyse
+            }
+        } else {
+            alert("Gefeliciteerd! Je hebt alle dagen voltooid!");
+        }
+    });
+
+    // Naar de vorige dag
+    buttons.prevDay.addEventListener("click", () => {
+        if (currentDay > 1) {
+            currentDay--;
+            saveProgress(); // Sla de voortgang op
+            loadDayContent();
+            showSection("checkIn");
+        }
+    });
+
+    // Reset de game
+    buttons.reset.addEventListener("click", () => {
+        currentDay = 1;
+        reflections = {};
+        localStorage.removeItem('reflections');
+        localStorage.removeItem('currentDay');
+        loadDayContent();
+        showSection("checkIn");
+    });
+
+    // Initieer de eerste dag
+    loadDayContent();
+});
