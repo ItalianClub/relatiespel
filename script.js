@@ -19,11 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
         prevDay: document.getElementById("prev-day-btn"),
     };
 
-    const progressIndicator = document.createElement("p");
-    progressIndicator.id = "progress-indicator";
-    progressIndicator.textContent = `Dag ${currentDay} van ${totalDays}`;
-    document.querySelector(".container").insertBefore(progressIndicator, sections.checkIn);
-
     const checkInPrompts = [
         "Hoe voel je je nu? Beschrijf eventuele fysieke spanningen.",
         "Welke emotie overheerst vandaag? Waar voel je dit in je lichaam?",
@@ -75,14 +70,52 @@ document.addEventListener("DOMContentLoaded", () => {
         "Hoe heeft deze dag je geholpen om te groeien?",
     ];
 
+    const generateAnalysis = (inputText) => {
+        if (inputText.includes("stress") || inputText.includes("spanning")) {
+            return {
+                psychological: "Je hebt spanning ervaren. Dit kan wijzen op onderliggende zorgen of overbelasting. Probeer tijd vrij te maken voor rust en reflectie.",
+                physical: "De spanning kan zich vastzetten in je schouders, nek of rug. Probeer ademhalingsoefeningen of een korte wandeling om je lichaam te ontspannen.",
+            };
+        }
+        if (inputText.includes("blij") || inputText.includes("gelukkig")) {
+            return {
+                psychological: "Het klinkt alsof je een moment van vreugde hebt ervaren. Reflecteer op wat dit moment zo speciaal maakte.",
+                physical: "Geluk brengt ontspanning in je lichaam. Je ademhaling kan dieper worden. Geniet bewust van dit gevoel.",
+            };
+        }
+        return {
+            psychological: "Je emoties lijken divers. Probeer ze te ontleden. Wat voel je precies? Blijf nieuwsgierig.",
+            physical: "Doe een lichaamsscan om spanning te identificeren. Dit helpt je fysieke signalen beter te begrijpen.",
+        };
+    };
+
+    const displayAnalysis = (inputId, outputId) => {
+        const inputField = document.getElementById(inputId);
+        const outputField = document.getElementById(outputId);
+
+        if (!inputField.value.trim()) {
+            alert("Vul je reflectie in om een analyse te ontvangen.");
+            inputField.style.border = "2px solid red";
+            return false;
+        }
+        inputField.style.border = "";
+
+        const analysis = generateAnalysis(inputField.value.trim());
+        outputField.innerHTML = `
+            <h3>Psychologische Analyse:</h3>
+            <p>${analysis.psychological}</p>
+            <h3>Fysieke Analyse:</h3>
+            <p>${analysis.physical}</p>
+        `;
+        return true;
+    };
+
     const loadDayContent = () => {
         document.getElementById("check-in-prompt").textContent = checkInPrompts[currentDay - 1];
-        const exercise = exercises[currentDay - 1];
-        document.getElementById("exercise-title").textContent = exercise.title;
-        document.getElementById("exercise-description").textContent = exercise.description;
+        document.getElementById("exercise-title").textContent = exercises[currentDay - 1].title;
+        document.getElementById("exercise-description").textContent = exercises[currentDay - 1].description;
         document.getElementById("check-out-prompt").textContent = checkOutPrompts[currentDay - 1];
-        document.getElementById("day-number").textContent = `Dag ${currentDay}`;
-        progressIndicator.textContent = `Dag ${currentDay} van ${totalDays}`;
+        document.getElementById("progress-indicator").innerHTML = `Dag <span class="active">${currentDay}</span> van ${totalDays}`;
     };
 
     const showSection = (sectionId) => {
@@ -90,10 +123,21 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(sectionId).classList.remove("hidden");
     };
 
-    buttons.checkIn.addEventListener("click", () => showSection("analysis-section"));
+    buttons.checkIn.addEventListener("click", () => {
+        if (displayAnalysis("check-in-text", "analysis-result")) {
+            showSection("analysis-section");
+        }
+    });
+
     buttons.next.addEventListener("click", () => showSection("exercise-section"));
+
     buttons.completeExercise.addEventListener("click", () => showSection("check-out-section"));
-    buttons.checkOut.addEventListener("click", () => showSection("sleep-section"));
+
+    buttons.checkOut.addEventListener("click", () => {
+        if (displayAnalysis("check-out-text", "analysis-result")) {
+            showSection("sleep-section");
+        }
+    });
 
     buttons.nextDay.addEventListener("click", () => {
         if (currentDay < totalDays) {
