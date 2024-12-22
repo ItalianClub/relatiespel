@@ -12,11 +12,24 @@
         <p id="intro">
             Werk elke dag aan jullie relatie met een unieke opdracht. Vandaag is Dag <span id="day-number">1</span>. 🚀
         </p>
-        <div id="daily-task">
-            <!-- Hier worden dagelijkse opdrachten weergegeven -->
+        
+        <!-- Progressiebalk -->
+        <div id="progress-bar-container">
+            <div id="progress-bar" style="width: 0%;"></div>
         </div>
-        <button id="next-btn" class="btn hidden">Volgende Dag ➡️</button>
+        
+        <!-- Placeholder voor dynamische dagelijkse opdrachten -->
+        <div id="daily-task">
+            <p class="loading">De opdracht van vandaag wordt geladen... 🕒</p>
+        </div>
+        
+        <!-- Knoppen -->
+        <div id="button-container">
+            <button id="start-btn" class="btn">Start Spel 🎮</button>
+            <button id="next-btn" class="btn hidden">Volgende Dag ➡️</button>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
