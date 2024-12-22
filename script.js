@@ -1,92 +1,96 @@
 // script.js
 
-// Beschikbare opdrachten
-const tasks = {
+// Spellen data
+const games = {
     charades: {
         title: "Emotie-Charades",
-        instructions: [
-            "Beeld een emotie uit die je partner moet raden.",
-            "Klik op 'Volgende Stap' om een nieuwe emotie te krijgen.",
-            "Gefeliciteerd, jullie hebben alle emoties gespeeld!"
-        ],
         steps: [
             "Blij maar zenuwachtig",
+            "Gefrustreerd door de vaatwasser",
             "Boos maar stil",
+            "Ongemakkelijk blij",
             "Heel enthousiast over een idee"
-        ],
+        ]
     },
     detective: {
         title: "De Emotie-Detective",
         instructions: [
-            "Observeer de emoties van je partner en maak een notitie.",
-            "Bespreek aan het einde van de dag je observaties.",
-            "Gefeliciteerd, jullie zijn nu emotiedetectives!"
-        ],
-        steps: ["Observeer je partner", "Maak aantekeningen", "Bespreek samen"],
+            "Observeer emoties van je partner en maak aantekeningen.",
+            "Bespreek samen wat je hebt geobserveerd."
+        ]
     },
     "body-language": {
         title: "Het Lichaamstaal-Spel",
-        instructions: [
-            "Boots het typische gedrag van je partner na.",
-            "Laat je partner raden wat je probeert uit te beelden.",
-            "Gefeliciteerd, jullie kennen elkaars signalen beter!"
-        ],
-        steps: ["Kies een houding", "Doe deze na", "Bespreek samen"],
-    },
+        steps: [
+            "Handen in je zij",
+            "Je armen over elkaar",
+            "Je wenkbrauwen fronsen",
+            "Je hoofd schudden",
+            "Met je vingers tikken"
+        ]
+    }
 };
 
-// HTML-elementen
-const gameSelect = document.getElementById("game-select");
-const startBtn = document.getElementById("start-btn");
-const taskDisplay = document.getElementById("task-display");
-const taskTitle = document.getElementById("task-title");
-const taskInstructions = document.getElementById("task-instructions");
-const nextBtn = document.getElementById("next-btn");
-const restartBtn = document.getElementById("restart-btn");
+// Elementen selecteren
+const menu = document.getElementById("menu");
+const gameSection = document.getElementById("game");
+const gameTitle = document.getElementById("game-title");
+const gameContent = document.getElementById("game-content");
+const backBtn = document.getElementById("back-btn");
 
-let currentTask = null;
+// Actieve game status
+let currentGame = null;
 let currentStep = 0;
 
-// Start de gekozen opdracht
-startBtn.addEventListener("click", () => {
-    const selectedTask = gameSelect.value;
-    currentTask = tasks[selectedTask];
+// Spel starten
+function startGame(gameKey) {
+    currentGame = games[gameKey];
     currentStep = 0;
-    displayTask();
-});
 
-// Toon de opdracht
-function displayTask() {
-    if (!currentTask) return;
+    // Verberg menu en toon spel
+    menu.classList.add("hidden");
+    gameSection.classList.remove("hidden");
+    backBtn.classList.remove("hidden");
 
-    taskDisplay.classList.remove("hidden");
-    taskTitle.textContent = currentTask.title;
-    taskInstructions.textContent = currentTask.instructions[currentStep];
+    // Toon spel inhoud
+    displayGame();
+}
 
-    // Knoppen logica
-    if (currentStep < currentTask.steps.length - 1) {
-        nextBtn.classList.remove("hidden");
-        restartBtn.classList.add("hidden");
-    } else {
-        nextBtn.classList.add("hidden");
-        restartBtn.classList.remove("hidden");
+// Spelinhoud tonen
+function displayGame() {
+    gameTitle.textContent = currentGame.title;
+
+    if (currentGame.steps) {
+        // Voor spellen met stappen (charades, body-language)
+        if (currentStep < currentGame.steps.length) {
+            gameContent.innerHTML = `
+                <p>${currentGame.steps[currentStep]}</p>
+                <button class="btn" onclick="nextStep()">Volgende</button>
+            `;
+        } else {
+            gameContent.innerHTML = "<p>Gefeliciteerd, je hebt het spel voltooid!</p>";
+        }
+    } else if (currentGame.instructions) {
+        // Voor spellen met instructies (detective)
+        gameContent.innerHTML = `
+            <textarea rows="10" placeholder="Maak hier je aantekeningen..." style="width: 100%; padding: 10px;"></textarea>
+            <p>${currentGame.instructions.join(" ")}</p>
+        `;
     }
 }
 
-// Volgende stap in de opdracht
-nextBtn.addEventListener("click", () => {
-    if (currentStep < currentTask.steps.length - 1) {
-        currentStep++;
-        taskInstructions.textContent = currentTask.instructions[currentStep];
-    } else {
-        nextBtn.classList.add("hidden");
-        restartBtn.classList.remove("hidden");
-    }
-});
+// Volgende stap
+function nextStep() {
+    currentStep++;
+    displayGame();
+}
 
-// Opnieuw starten
-restartBtn.addEventListener("click", () => {
-    taskDisplay.classList.add("hidden");
-    currentTask = null;
+// Terug naar menu
+function goBack() {
+    currentGame = null;
     currentStep = 0;
-});
+
+    // Verberg spel en toon menu
+    gameSection.classList.add("hidden");
+    menu.classList.remove("hidden");
+}
