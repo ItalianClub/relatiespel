@@ -1,4 +1,4 @@
-/* Algemene styling */
+/* Algemene pagina-opmaak */
 body {
     font-family: Arial, sans-serif;
     background-color: #f3f2ef;
@@ -7,6 +7,7 @@ body {
     padding: 0;
 }
 
+/* Centraal container */
 .container {
     max-width: 600px;
     margin: 50px auto;
@@ -17,37 +18,27 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Hoofdtekst en kopjes */
 h1 {
-    font-size: 2em;
     color: #9c1925;
+    font-size: 2em;
     margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 15px;
 }
 
 p {
     font-size: 1.2em;
-    margin-bottom: 20px;
     line-height: 1.6;
+    margin-bottom: 15px;
 }
 
-/* Dagelijkse Check-in */
-#daily-check-in {
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#daily-check-in h2 {
-    font-size: 1.5em;
-    color: #9c1925;
-    margin-bottom: 10px;
-}
-
-#check-in-text {
+/* Tekstvelden */
+textarea {
     width: 100%;
     height: 100px;
     margin: 10px 0;
@@ -58,7 +49,14 @@ p {
     resize: none;
 }
 
-#check-in-btn {
+/* Foutstijl voor tekstvelden */
+textarea.error {
+    border-color: red;
+    background-color: #ffe6e6;
+}
+
+/* Knoppen */
+.btn {
     padding: 10px 20px;
     font-size: 1em;
     background-color: #9c1925;
@@ -66,42 +64,18 @@ p {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin: 10px 5px;
     transition: background-color 0.3s, transform 0.2s;
 }
 
-#check-in-btn:hover {
+.btn:hover {
     background-color: #b3212f;
     transform: scale(1.05);
 }
 
-/* Opdracht sectie */
-#daily-task {
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
+/* Verborgen elementen */
+.hidden {
     display: none;
-}
-
-#task-title {
-    font-size: 1.5em;
-    color: #9c1925;
-    margin-bottom: 10px;
-}
-
-#task-description {
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-#choice-container {
-    margin-top: 10px;
-}
-
-#choice-container .btn {
-    margin: 5px;
 }
 
 /* Feedback sectie */
@@ -114,52 +88,23 @@ p {
     border-radius: 10px;
 }
 
-/* Overzichtspagina */
-#overview-page {
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
-    display: none;
-}
-
-#overview-content {
+/* Samenvatting sectie */
+#summary-content {
     text-align: left;
     font-size: 1.1em;
     line-height: 1.6;
+    margin-top: 10px;
+}
+
+#summary-content div {
     margin-bottom: 20px;
-}
-
-#overview-content .day-entry {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-}
-
-/* Knoppen */
-.btn {
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #9c1925;
-    color: white;
-    border: none;
+    padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin: 10px 5px;
+    background-color: #f9f9f9;
 }
 
-.btn:hover {
-    background-color: #b3212f;
-    transform: scale(1.05);
-}
-
-.hidden {
-    display: none;
-}
-
-/* Responsieve styling */
+/* Responsieve layout */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -169,8 +114,12 @@ p {
         font-size: 1.8em;
     }
 
+    h2 {
+        font-size: 1.3em;
+    }
+
     p {
-        font-size: 1.1em;
+        font-size: 1em;
     }
 
     .btn {
@@ -178,15 +127,7 @@ p {
         padding: 8px 15px;
     }
 
-    #daily-check-in h2 {
-        font-size: 1.3em;
-    }
-
-    #check-in-text {
+    textarea {
         font-size: 0.9em;
-    }
-
-    #overview-content {
-        font-size: 1em;
     }
 }
