@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const totalDays = 14;
-    let currentDay = 1;
+    const totalDays = 14; // Aantal dagen in de game
+    let currentDay = 1; // Huidige dag
 
+    // Secties ophalen
     const sections = {
         checkIn: document.getElementById("check-in-section"),
         analysis: document.getElementById("analysis-section"),
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sleep: document.getElementById("sleep-section"),
     };
 
+    // Knoppen ophalen
     const buttons = {
         checkIn: document.getElementById("check-in-btn"),
         next: document.getElementById("next-btn"),
@@ -20,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         reset: document.getElementById("reset-btn"),
     };
 
+    // Prompts en oefeningen
     const prompts = [
         "Hoe voel je je vandaag? Beschrijf je emoties en fysieke toestand.",
         "Wat heb je vandaag geleerd over jezelf?",
@@ -96,83 +99,88 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     ];
 
-    const generateAnalysis = (inputText) => {
-        if (inputText.toLowerCase().includes("stress")) {
-            return {
-                psychological: "Het klinkt alsof je stress hebt ervaren. Reflecteer: 'Wat kan ik doen om meer rust te creëren?'",
-                physical: "Observeer waar je spanning voelt. Probeer een ademhalingsoefening om te ontspannen.",
-            };
-        }
-        return {
-            psychological: "Je reflectie is waardevol. Probeer specifieke emoties te benoemen.",
-            physical: "Doe een lichaamsscan om spanning en ontspanning te identificeren.",
-        };
-    };
-
+    // Daginhoud laden
     const loadDayContent = () => {
         document.getElementById("check-in-prompt").textContent = prompts[currentDay - 1];
         document.getElementById("day-number").textContent = currentDay;
     };
 
-    const resetGame = () => {
-        currentDay = 1;
-        document.querySelectorAll("textarea").forEach(textarea => textarea.value = "");
-        loadDayContent();
-        showSection("check-in");
-    };
-
+    // Secties tonen of verbergen
     const showSection = (sectionId) => {
-        Object.values(sections).forEach(section => section.classList.add("hidden"));
+        Object.values(sections).forEach((section) => section.classList.add("hidden"));
         sections[sectionId].classList.remove("hidden");
     };
 
+    // Reset de game
+    const resetGame = () => {
+        currentDay = 1;
+        document.querySelectorAll("textarea").forEach((textarea) => (textarea.value = ""));
+        loadDayContent();
+        showSection("checkIn");
+    };
+
+    // Check-in voltooien
     buttons.checkIn.addEventListener("click", () => {
         const input = document.getElementById("check-in-text").value.trim();
         if (!input) return alert("Vul je check-in in.");
 
-        const analysis = generateAnalysis(input);
-        document.getElementById("analysis-result").innerHTML = `
+        // Update analyse sectie met resultaten
+        const analysisResult = `
             <h3>Psychologische Analyse:</h3>
-            <p>${analysis.psychological}</p>
+            <p>Je reflecteert op emoties en leert deze herkennen.</p>
             <h3>Fysieke Analyse:</h3>
-            <p>${analysis.physical}</p>
+            <p>Observeer je lichaam voor spanning en ontspanning.</p>
         `;
+        document.getElementById("analysis-result").innerHTML = analysisResult;
+
         showSection("analysis");
     });
 
+    // Ga naar oefening
     buttons.next.addEventListener("click", () => {
-        document.getElementById("exercise-title").textContent = exercises[currentDay - 1].title;
-        document.getElementById("exercise-description").textContent = exercises[currentDay - 1].description;
+        const exercise = exercises[currentDay - 1];
+        document.getElementById("exercise-title").textContent = exercise.title;
+        document.getElementById("exercise-description").textContent = exercise.description;
         showSection("exercise");
     });
 
-    buttons.completeExercise.addEventListener("click", () => showSection("checkOut"));
+    // Oefening voltooien
+    buttons.completeExercise.addEventListener("click", () => {
+        showSection("checkOut");
+    });
 
+    // Check-out voltooien
     buttons.checkOut.addEventListener("click", () => {
         const input = document.getElementById("check-out-text").value.trim();
         if (!input) return alert("Vul je check-out in.");
+
         showSection("sleep");
     });
 
+    // Naar de volgende dag
     buttons.nextDay.addEventListener("click", () => {
         if (currentDay < totalDays) {
             currentDay++;
             loadDayContent();
-            showSection("check-in");
+            showSection("checkIn");
         } else {
             alert("Gefeliciteerd! Je hebt alle 14 dagen voltooid!");
+            resetGame();
         }
     });
 
+    // Naar de vorige dag
     buttons.prevDay.addEventListener("click", () => {
         if (currentDay > 1) {
             currentDay--;
             loadDayContent();
-            showSection("check-in");
+            showSection("checkIn");
         }
     });
 
+    // Game resetten
     buttons.reset.addEventListener("click", resetGame);
 
+    // Laad de eerste daginhoud
     loadDayContent();
 });
