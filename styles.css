@@ -17,6 +17,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Zachte schaduw */
 }
 
+/* Titel en tekst */
 h1 {
     font-size: 2em;
     color: #9c1925; /* Italiaanse roodtint */
@@ -29,7 +30,7 @@ p {
     line-height: 1.6; /* Betere leesbaarheid */
 }
 
-/* Progressiebalk */
+/* Voortgangsbalk */
 #progress-bar-container {
     width: 100%;
     height: 20px;
@@ -44,14 +45,51 @@ p {
     height: 100%;
     background-color: #9c1925; /* Rode voortgangsbalk */
     width: 0%; /* Startpunt */
-    transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out; /* Vloeiende overgang */
+}
+
+/* Opdracht van de dag */
+#daily-task {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+#daily-task h2 {
+    font-size: 1.5em;
+    color: #9c1925;
+    margin-bottom: 10px;
+}
+
+#daily-task p {
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+/* Feedback sectie */
+#feedback-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px dashed #9c1925; /* Dashed border voor feedback */
+    border-radius: 10px;
+    background-color: #fff0f0; /* Zachte rode tint */
+    color: #9c1925;
+    font-size: 1.1em;
+    display: none; /* Verborgen totdat feedback wordt getoond */
+}
+
+#feedback-section p {
+    margin: 0;
+    line-height: 1.5;
 }
 
 /* Knoppen */
 .btn {
     padding: 10px 20px;
     font-size: 1em;
-    background-color: #9c1925;
+    background-color: #9c1925; /* Rood */
     color: white;
     border: none;
     border-radius: 5px;
@@ -61,15 +99,29 @@ p {
 }
 
 .btn:hover {
-    background-color: #b3212f;
+    background-color: #b3212f; /* Donkerder rood bij hover */
     transform: scale(1.05); /* Lichte vergroting bij hover */
 }
 
 .hidden {
-    display: none;
+    display: none; /* Verberg elementen */
 }
 
-/* Mobiele optimalisatie */
+/* Animaties */
+#daily-task, #feedback-section {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsieve styling */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -81,6 +133,10 @@ p {
 
     p {
         font-size: 1.1em;
+    }
+
+    #daily-task h2 {
+        font-size: 1.3em;
     }
 
     .btn {
