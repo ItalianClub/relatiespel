@@ -1,170 +1,132 @@
-/* Algemene styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f2ef;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
+document.addEventListener("DOMContentLoaded", () => {
+    const dayNumber = document.getElementById("day-number");
+    const dailyTask = document.getElementById("daily-task");
+    const checkInBtn = document.getElementById("check-in-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const overviewBtn = document.getElementById("overview-btn");
+    const backBtn = document.getElementById("back-btn");
+    const feedbackSection = document.getElementById("feedback-section");
+    const checkInText = document.getElementById("check-in-text");
+    const choiceContainer = document.getElementById("choice-container");
+    const option1 = document.getElementById("option1");
+    const option2 = document.getElementById("option2");
+    const taskTitle = document.getElementById("task-title");
+    const taskDescription = document.getElementById("task-description");
+    const overviewPage = document.getElementById("overview-page");
+    const overviewContent = document.getElementById("overview-content");
 
-.container {
-    max-width: 600px;
-    margin: 50px auto;
-    text-align: center;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+    const tasks = [
+        {
+            day: 1,
+            title: "Reflectie op emoties ❤️",
+            description: "Hoe voelde je je deze week? Deel dit samen.",
+            choices: ["Bespreek een positief moment", "Bespreek een uitdagend moment"],
+        },
+        {
+            day: 2,
+            title: "Complimentendag 🌟",
+            description: "Geef elkaar drie complimenten vandaag.",
+            choices: ["Geef een persoonlijk compliment", "Geef een compliment over gedrag"],
+        },
+        {
+            day: 3,
+            title: "Triggers ontdekken 🤔",
+            description: "Bespreek situaties die frustratie veroorzaken.",
+            choices: ["Herken een eigen trigger", "Bespreek een trigger van de ander"],
+        },
+    ];
 
-h1 {
-    font-size: 2em;
-    color: #9c1925; /* Italiaanse roodtint */
-    margin-bottom: 20px;
-}
+    let currentDay = 0;
+    const checkIns = {}; // Opslag voor dagelijkse check-ins
 
-p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-
-/* Dagelijkse Check-in */
-#daily-check-in {
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#daily-check-in h2 {
-    font-size: 1.5em;
-    color: #9c1925;
-    margin-bottom: 10px;
-}
-
-#check-in-text {
-    width: 100%;
-    height: 100px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 1em;
-    resize: none;
-}
-
-#check-in-btn {
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #9c1925;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#check-in-btn:hover {
-    background-color: #b3212f;
-    transform: scale(1.05);
-}
-
-/* Opdracht sectie */
-#daily-task {
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
-    display: none; /* Verbergen tot geladen */
-}
-
-#task-title {
-    font-size: 1.5em;
-    color: #9c1925;
-    margin-bottom: 10px;
-}
-
-#task-description {
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-#choice-container {
-    margin-top: 10px;
-}
-
-#choice-container p {
-    margin-bottom: 10px;
-    font-size: 1.1em;
-}
-
-#choice-container .btn {
-    margin: 5px;
-}
-
-/* Feedback sectie */
-.feedback {
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px dashed #9c1925;
-    background-color: #fff0f0;
-    color: #9c1925;
-    border-radius: 10px;
-}
-
-/* Knoppen */
-.btn {
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #9c1925;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin: 10px 5px;
-}
-
-.btn:hover {
-    background-color: #b3212f;
-    transform: scale(1.05);
-}
-
-.hidden {
-    display: none;
-}
-
-/* Responsieve styling */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
+    /**
+     * Toon de dagelijkse check-in.
+     */
+    function showCheckIn() {
+        document.getElementById("daily-check-in").classList.remove("hidden");
+        dailyTask.classList.add("hidden");
+        feedbackSection.classList.add("hidden");
     }
 
-    h1 {
-        font-size: 1.8em;
+    /**
+     * Laad de opdracht voor de dag.
+     */
+    function loadTask() {
+        const task = tasks[currentDay % tasks.length];
+        dayNumber.textContent = currentDay + 1;
+        taskTitle.textContent = task.title;
+        taskDescription.textContent = task.description;
+        option1.textContent = task.choices[0];
+        option2.textContent = task.choices[1];
+        dailyTask.classList.remove("hidden");
+        choiceContainer.classList.remove("hidden");
+        feedbackSection.classList.add("hidden");
     }
 
-    p {
-        font-size: 1.1em;
+    /**
+     * Toon feedback na keuze.
+     */
+    function showFeedback(choice) {
+        feedbackSection.innerHTML = `<p><strong>Feedback:</strong> Goede keuze! ${choice} is een mooie stap.</p>`;
+        feedbackSection.classList.remove("hidden");
+        choiceContainer.classList.add("hidden");
+        nextBtn.classList.remove("hidden");
+        overviewBtn.classList.remove("hidden");
     }
 
-    .btn {
-        font-size: 0.9em;
-        padding: 8px 15px;
-    }
+    /**
+     * Dagelijkse check-in voltooien.
+     */
+    checkInBtn.addEventListener("click", () => {
+        const checkInValue = checkInText.value.trim();
+        if (checkInValue !== "") {
+            checkIns[`Dag ${currentDay + 1}`] = checkInValue;
+            document.getElementById("daily-check-in").classList.add("hidden");
+            loadTask();
+        } else {
+            alert("Vul iets in om verder te gaan.");
+        }
+    });
 
-    #daily-check-in h2 {
-        font-size: 1.3em;
-    }
+    /**
+     * Toon overzicht van eerdere dagen.
+     */
+    overviewBtn.addEventListener("click", () => {
+        overviewContent.innerHTML = "";
+        for (const [day, text] of Object.entries(checkIns)) {
+            overviewContent.innerHTML += `
+                <div class="day-entry">
+                    <strong>${day}:</strong>
+                    <p>${text}</p>
+                </div>`;
+        }
+        overviewPage.classList.remove("hidden");
+        dailyTask.classList.add("hidden");
+        feedbackSection.classList.add("hidden");
+        document.getElementById("daily-check-in").classList.add("hidden");
+        nextBtn.classList.add("hidden");
+        overviewBtn.classList.add("hidden");
+    });
 
-    #check-in-text {
-        font-size: 0.9em;
-    }
-}
+    /**
+     * Terug naar het spel.
+     */
+    backBtn.addEventListener("click", () => {
+        overviewPage.classList.add("hidden");
+        dailyTask.classList.remove("hidden");
+        nextBtn.classList.remove("hidden");
+        overviewBtn.classList.remove("hidden");
+    });
+
+    /**
+     * Volgende dag logica.
+     */
+    nextBtn.addEventListener("click", () => {
+        currentDay++;
+        checkInText.value = ""; // Reset de check-in voor de volgende dag
+        showCheckIn();
+    });
+
+    // Begin spel met de check-in
+    showCheckIn();
+});
