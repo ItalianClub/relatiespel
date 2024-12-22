@@ -12,7 +12,7 @@
         <p id="intro">Dag <span id="day-number">1</span> - Werk aan emotieherkenning en lichaamsbewustzijn.</p>
 
         <!-- Check-in Sectie -->
-        <div id="check-in-section">
+        <div id="check-in-section" class="section">
             <h2>Check-in: Reflecteer op je dag</h2>
             <p id="check-in-prompt"></p>
             <textarea id="check-in-text" placeholder="Beschrijf je gevoelens en fysieke toestand..."></textarea>
@@ -20,21 +20,21 @@
         </div>
 
         <!-- Analyse Sectie -->
-        <div id="analysis-section" class="hidden">
+        <div id="analysis-section" class="section hidden">
             <h2>Analyse van je Check-in</h2>
             <p id="analysis-result"></p>
             <button id="next-btn" class="btn">Ga naar de Oefening ➡️</button>
         </div>
 
         <!-- Oefening Sectie -->
-        <div id="exercise-section" class="hidden">
+        <div id="exercise-section" class="section hidden">
             <h2 id="exercise-title"></h2>
             <p id="exercise-description"></p>
             <button id="complete-exercise-btn" class="btn">Oefening Voltooien ✅</button>
         </div>
 
         <!-- Check-out Sectie -->
-        <div id="check-out-section" class="hidden">
+        <div id="check-out-section" class="section hidden">
             <h2>Check-out: Reflecteer op je dag</h2>
             <p id="check-out-prompt"></p>
             <textarea id="check-out-text" placeholder="Wat heb je geleerd en ervaren vandaag?"></textarea>
@@ -42,10 +42,16 @@
         </div>
 
         <!-- Slaap Sectie -->
-        <div id="sleep-section" class="hidden">
+        <div id="sleep-section" class="section hidden">
             <h2>Slaapoefening: Kom tot rust</h2>
             <p id="sleep-exercise-description"></p>
             <button id="next-day-btn" class="btn">Volgende Dag ➡️</button>
+        </div>
+
+        <!-- Navigatie -->
+        <div class="navigation">
+            <button id="prev-day-btn" class="btn">← Vorige Dag</button>
+            <button id="next-day-btn" class="btn">Volgende Dag →</button>
         </div>
     </div>
     <script src="script.js"></script>
