@@ -1,88 +1,90 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM is volledig geladen!");
-
-    // Selecteer de elementen
     const dayNumber = document.getElementById("day-number");
     const dailyTask = document.getElementById("daily-task");
-    const feedbackSection = document.getElementById("feedback-section");
-    const rewardSection = document.getElementById("reward-section");
+    const checkInBtn = document.getElementById("check-in-btn");
     const nextBtn = document.getElementById("next-btn");
-    const startBtn = document.getElementById("start-btn");
-    const progressBar = document.getElementById("progress-bar");
+    const feedbackSection = document.getElementById("feedback-section");
+    const checkInText = document.getElementById("check-in-text");
+    const choiceContainer = document.getElementById("choice-container");
+    const option1 = document.getElementById("option1");
+    const option2 = document.getElementById("option2");
+    const taskTitle = document.getElementById("task-title");
+    const taskDescription = document.getElementById("task-description");
 
-    // Taken en voortgang
     const tasks = [
-        { day: 1, title: "Reflectie op emoties ❤️", description: "Noteer drie momenten waarop jij sterke emoties hebt gevoeld." },
-        { day: 2, title: "Complimentendag 🌟", description: "Geef elkaar gedurende de dag drie oprechte complimenten." },
-        { day: 3, title: "Triggers ontdekken 🤔", description: "Bespreek situaties die vaak frustraties oproepen." },
-        { day: 4, title: "Time-Out Plan 🔄", description: "Maak afspraken over hoe je een 'time-out' kunt nemen bij een conflict." },
-        { day: 5, title: "Dankbaarheid 🥰", description: "Deel iets waarvoor je dankbaar bent in je partner." },
-        { day: 6, title: "Wat betekent harmonie? 🤝", description: "Definieer samen wat harmonie betekent in jullie relatie." },
-        { day: 7, title: "Emotie-Charades 🎭", description: "Beeld emoties uit (zoals blij, boos, zenuwachtig)." },
-        { day: 8, title: "Lichaamstaal begrijpen 👀", description: "Herken elkaars lichaamstaal en bespreek wat dit betekent." },
-        { day: 9, title: "Conflict reviseren 🔁", description: "Bespreek een oud conflict en hoe jullie het nu zouden oplossen." },
-        { day: 10, title: "Samen vieren 🎉", description: "Benoem samen jullie belangrijkste groei tot nu toe." },
-        { day: 11, title: "Creativiteit delen 🎨", description: "Maak samen een tekening of schrijf een gedicht." },
-        { day: 12, title: "Toekomst dromen ✨", description: "Bespreek jullie dromen voor de toekomst." },
-        { day: 13, title: "Zelfreflectie 📖", description: "Wat heb je geleerd over jezelf en je partner?" },
-        { day: 14, title: "Slotceremonie 🎊", description: "Vier jullie succes en benoem hoe jullie samen verder willen groeien." },
+        {
+            day: 1,
+            title: "Reflectie op emoties ❤️",
+            description: "Hoe voelde je je deze week? Deel dit samen.",
+            choices: ["Bespreek een positief moment", "Bespreek een uitdagend moment"],
+        },
+        {
+            day: 2,
+            title: "Complimentendag 🌟",
+            description: "Geef elkaar drie complimenten vandaag.",
+            choices: ["Geef een persoonlijk compliment", "Geef een compliment over gedrag"],
+        },
+        {
+            day: 3,
+            title: "Triggers ontdekken 🤔",
+            description: "Bespreek situaties die frustratie veroorzaken.",
+            choices: ["Herken een eigen trigger", "Bespreek een trigger van de ander"],
+        },
     ];
 
     let currentDay = 0;
 
     /**
-     * Update de voortgangsbalk.
-     */
-    function updateProgress() {
-        const progressPercentage = ((currentDay + 1) / tasks.length) * 100;
-        progressBar.style.width = `${progressPercentage}%`;
-    }
-
-    /**
-     * Toon feedback en beloningen.
-     */
-    function showFeedback() {
-        feedbackSection.innerHTML = `<p><strong>Feedback:</strong> Jullie doen het geweldig! Ga zo door. 💪</p>`;
-        feedbackSection.classList.remove("hidden");
-
-        if ((currentDay + 1) % 7 === 0) {
-            rewardSection.classList.remove("hidden");
-        } else {
-            rewardSection.classList.add("hidden");
-        }
-    }
-
-    /**
-     * Laad de taak van de dag.
+     * Laad de opdracht voor de dag.
      */
     function loadTask() {
-        const task = tasks[currentDay % tasks.length];
-        dayNumber.textContent = currentDay % tasks.length + 1;
-        dailyTask.innerHTML = `<h2>${task.title}</h2><p>${task.description}</p>`;
-        updateProgress();
+        const task = tasks[currentDay];
+        dayNumber.textContent = currentDay + 1;
+        taskTitle.textContent = task.title;
+        taskDescription.textContent = task.description;
+        option1.textContent = task.choices[0];
+        option2.textContent = task.choices[1];
+        dailyTask.classList.remove("hidden");
+        choiceContainer.classList.remove("hidden");
         feedbackSection.classList.add("hidden");
     }
 
     /**
-     * Start het spel.
+     * Toon feedback na keuze.
      */
-    startBtn.addEventListener("click", () => {
-        startBtn.classList.add("hidden");
-        nextBtn.classList.remove("hidden");
-        loadTask();
+    function showFeedback(choice) {
+        feedbackSection.innerHTML = `<p><strong>Feedback:</strong> Goede keuze! ${choice} is een mooie stap.</p>`;
+        feedbackSection.classList.remove("hidden");
+        choiceContainer.classList.add("hidden");
+    }
+
+    /**
+     * Dagelijkse check-in.
+     */
+    checkInBtn.addEventListener("click", () => {
+        if (checkInText.value.trim() !== "") {
+            dailyTask.classList.remove("hidden");
+            document.getElementById("daily-check-in").classList.add("hidden");
+            loadTask();
+        } else {
+            alert("Vul iets in om verder te gaan.");
+        }
     });
 
     /**
-     * Ga naar de volgende dag.
+     * Keuze-opties logica.
+     */
+    option1.addEventListener("click", () => showFeedback(option1.textContent));
+    option2.addEventListener("click", () => showFeedback(option2.textContent));
+
+    /**
+     * Volgende dag logica.
      */
     nextBtn.addEventListener("click", () => {
-        showFeedback();
-        currentDay++;
-        setTimeout(() => {
-            loadTask();
-        }, 2000); // Wacht 2 seconden
+        currentDay = (currentDay + 1) % tasks.length;
+        loadTask();
     });
 
-    // Begin met het laden van de eerste taak
+    // Begin spel
     loadTask();
 });
