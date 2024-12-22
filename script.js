@@ -4,10 +4,20 @@ document.addEventListener("DOMContentLoaded", () => {
         { title: "Complimentendag", description: "Geef elkaar drie complimenten en schrijf op hoe dit voelt.", choices: ["Complimenteer karaktereigenschappen 🧡", "Complimenteer gedrag 🛠️"] },
         { title: "Triggers ontdekken", description: "Bespreek situaties die frustraties veroorzaken en hoe je ze kunt vermijden.", choices: ["Herken een trigger", "Bespreek een oplossing"] },
         { title: "Verbindende communicatie", description: "Oefen actief luisteren en geef je partner 10 minuten volledige aandacht.", choices: ["Deel wat je voelt", "Luister actief"] },
-        // Voeg meer opdrachten toe tot 14
+        { title: "Samen doelen stellen", description: "Bepaal één gezamenlijk doel voor de komende week.", choices: ["Een gezinsdoel", "Een persoonlijk doel delen"] },
+        { title: "Dankbaarheid tonen", description: "Noem drie dingen waar je dankbaar voor bent in jullie relatie.", choices: ["Focus op recente momenten", "Kies iets uit het verleden"] },
+        { title: "Vrije keuze", description: "Kies samen een activiteit om quality time door te brengen.", choices: ["Een film kijken", "Samen koken"] },
+        { title: "Herken fysieke signalen", description: "Bespreek hoe je lichaam reageert op stress of geluk.", choices: ["Bespreek stress-signalen", "Deel positieve lichamelijke reacties"] },
+        { title: "Herinneringen ophalen", description: "Denk samen terug aan een mooie herinnering.", choices: ["Een vakantie", "Een prestatie vieren"] },
+        { title: "Ondersteuning bieden", description: "Vraag je partner hoe je hen kunt ondersteunen.", choices: ["Vraag naar werk", "Vraag naar persoonlijke doelen"] },
+        { title: "Behoeften uitspreken", description: "Deel één behoefte die je vandaag hebt.", choices: ["Een emotionele behoefte", "Een praktische behoefte"] },
+        { title: "Gezamenlijk ontspannen", description: "Plan 30 minuten samen om te ontspannen.", choices: ["Een wandeling maken", "Samen mediteren"] },
+        { title: "Complimenten reflecteren", description: "Herhaal drie complimenten die je eerder hebt ontvangen.", choices: ["Complimenten van je partner", "Complimenten van anderen"] },
+        { title: "Eindreflectie", description: "Bespreek wat jullie in de afgelopen dagen hebben geleerd.", choices: ["Persoonlijke groei", "Relatieverbeteringen"] },
     ];
 
     const checkInData = [];
+    const feedbackData = [];
     let currentDay = 0;
 
     // DOM-elementen
@@ -81,12 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackMessage.textContent = `Goede keuze! "${choice}" is een belangrijke stap in jullie proces.`;
         feedbackSection.classList.remove("hidden");
         taskSection.classList.add("hidden");
+        feedbackData[currentDay] = choice;
     }
 
     // Volgende dag
     nextDayBtn.addEventListener("click", () => {
         currentDay++;
-        if (currentDay >= 14) {
+        if (currentDay >= tasks.length) {
             alert("Nieuwe cyclus gestart! Jullie blijven groeien. ❤️");
             currentDay = 0;
         }
