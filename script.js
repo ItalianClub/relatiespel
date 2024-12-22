@@ -81,11 +81,29 @@ document.addEventListener("DOMContentLoaded", () => {
     /**
      * Volgende dag logica.
      */
-    nextBtn.addEventListener("click", () => {
+    nextBtn.addEventListener("click", goToNextDay);
+
+    /**
+     * Enter-toets als knop.
+     */
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            if (!dailyTask.classList.contains("hidden") && !choiceContainer.classList.contains("hidden")) {
+                showFeedback(option1.textContent); // Standaard keuze bij Enter
+            } else if (!nextBtn.classList.contains("hidden")) {
+                goToNextDay();
+            }
+        }
+    });
+
+    /**
+     * Ga naar de volgende dag.
+     */
+    function goToNextDay() {
         currentDay++;
         loadTask();
         nextBtn.classList.add("hidden");
-    });
+    }
 
     // Begin spel
     loadTask();
