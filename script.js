@@ -1,19 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tasks = [
-        { title: "Reflectie op emoties", description: "Hoe voel je je vandaag? Bespreek dit met elkaar.", choices: ["Focus op positieve emoties 😃", "Identificeer een uitdaging 🤔"] },
-        { title: "Lichamelijke signalen herkennen", description: "Wat voel je in je lichaam vandaag? Beschrijf dit.", choices: ["Pijn of spanning", "Ontspanning of energie"] },
-        { title: "Gevoelens benoemen", description: "Welke woorden passen bij hoe je je voelt?", choices: ["Blij of trots", "Verdrietig of bezorgd"] },
-        { title: "Triggers onderzoeken", description: "Welke situatie maakte indruk op je vandaag? Bespreek dit met je partner.", choices: ["Een positieve ervaring", "Een stressvolle ervaring"] },
-        { title: "Complimenten reflecteren", description: "Geef je partner drie complimenten en ontvang er ook drie.", choices: ["Complimenteer gedrag", "Complimenteer karakter"] },
-        { title: "Verbindende communicatie", description: "Deel vandaag wat je waardeert in je partner en luister actief.", choices: ["Begin met 'ik voel...'", "Focus op wederzijds begrip"] },
-        { title: "Dankbaarheid tonen", description: "Noem drie dingen waar je dankbaar voor bent in jullie relatie.", choices: ["Kleine momenten", "Grote mijlpalen"] },
-        { title: "Samen doelen stellen", description: "Bepaal samen één doel voor de komende week.", choices: ["Een emotioneel doel", "Een praktisch doel"] },
-        { title: "Stress verminderen", description: "Probeer samen een ontspannende activiteit te doen.", choices: ["Meditatie of ademhalingsoefeningen", "Een wandeling maken"] },
-        { title: "Herinneringen ophalen", description: "Bespreek een positieve herinnering die jullie samen hebben.", choices: ["Een vakantie", "Een gezamenlijk succes"] },
-        { title: "Lichamelijke ontspanning", description: "Neem vandaag tijd om je lichaam te ontspannen.", choices: ["Yoga of stretching", "Een warm bad nemen"] },
-        { title: "Woordenschat uitbreiden", description: "Zoek nieuwe woorden om je gevoelens en lichamelijke signalen te beschrijven.", choices: ["Gebruik een woordenlijst", "Schrijf nieuwe termen op"] },
-        { title: "Feedback ontvangen", description: "Vraag je partner om feedback over jullie communicatie.", choices: ["Focus op verbetering", "Focus op wat goed gaat"] },
-        { title: "Eindreflectie", description: "Bespreek wat je in de afgelopen dagen hebt geleerd.", choices: ["Persoonlijke groei", "Relatieverbetering"] },
+        {
+            title: "Lichamelijke signalen herkennen",
+            description: "Wat voel je in je lichaam vandaag? Beschrijf spanning, ademhaling, of energie.",
+            choices: ["Spanning in spieren", "Ontspanning en rust"]
+        },
+        {
+            title: "Ademhalingsoefening",
+            description: "Doe 5 diepe ademhalingen en observeer hoe je lichaam reageert.",
+            choices: ["Meer ontspanning", "Nog steeds spanning"]
+        },
+        {
+            title: "Emoties benoemen",
+            description: "Welke emotie voel je het sterkst vandaag? Beschrijf waar je dit in je lichaam voelt.",
+            choices: ["Blijheid in de borst", "Stress in de schouders"]
+        },
+        {
+            title: "Progressieve spierontspanning",
+            description: "Span en ontspan je schouders, nek en kaak. Hoe voelt dit?",
+            choices: ["Meer rust", "Nog steeds spanning"]
+        },
+        {
+            title: "Observeren zonder oordeel",
+            description: "Ga rustig zitten en observeer je ademhaling. Welke gedachten komen op?",
+            choices: ["Rustige gedachten", "Onrustige gedachten"]
+        },
+        {
+            title: "Non-verbale communicatie",
+            description: "Hoe voel je je lichaamstaal vandaag? Wat zou je partner hiervan merken?",
+            choices: ["Open en ontspannen", "Gesloten en gespannen"]
+        },
+        // Meer opdrachten voor de 14 dagen
     ];
 
     const checkInData = [];
@@ -39,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const feedbackMessage = document.getElementById("feedback-message");
     const nextDayBtn = document.getElementById("next-day-btn");
 
+    // Check-in afronden
     checkInBtn.addEventListener("click", () => {
         const inputValue = checkInText.value.trim();
         if (inputValue === "") {
@@ -47,29 +65,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         checkInData[currentDay] = inputValue;
         checkInText.value = "";
-        analyzeInput(inputValue, "check-in");
+        showAnalysis(inputValue, "check-in");
     });
 
-    function analyzeInput(input, type) {
-        const emotions = {
-            stress: "Je voelt spanning. Probeer samen te ontspannen. 💆‍♀️",
-            blij: "Je bent blij vandaag! Deel dit gevoel. 😄",
-            verdriet: "Je voelt verdriet. Probeer hierover te praten. 🥺",
-            moe: "Je voelt je moe. Neem wat tijd voor rust. 💤",
-        };
-
-        for (const [keyword, message] of Object.entries(emotions)) {
-            if (input.toLowerCase().includes(keyword)) {
-                showFeedback(message);
-                return;
-            }
+    function showAnalysis(input, type) {
+        let analysisMessage;
+        if (type === "check-in") {
+            analysisMessage = `Je gaf aan: "${input}". Dit is een belangrijke stap om bewust te worden van je emoties en lichaam. Let op signalen zoals ademhaling of spanning.`;
+        } else if (type === "check-out") {
+            analysisMessage = `Je reflectie: "${input}". Je groeit in bewustwording. Observeer hoe je lichaam reageerde op emoties vandaag.`;
         }
-
-        showFeedback("Interessante reflectie. Probeer verder te onderzoeken wat je voelt. ✨");
-    }
-
-    function showFeedback(message) {
-        analysisResult.textContent = message;
+        analysisResult.textContent = analysisMessage;
         analysisSection.classList.remove("hidden");
         document.getElementById("check-in-section").classList.add("hidden");
     }
@@ -93,16 +99,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         checkOutData[currentDay] = inputValue;
         checkOutText.value = "";
-        analyzeInput(inputValue, "check-out");
+        showAnalysis(inputValue, "check-out");
     });
 
     nextDayBtn.addEventListener("click", () => {
         currentDay++;
         if (currentDay >= tasks.length) {
-            alert("Gefeliciteerd! Jullie hebben de 14-daagse reflectie voltooid! ❤️");
-            currentDay = 0;
+            showSummary();
+        } else {
+            resetDay();
         }
+    });
+
+    function resetDay() {
         document.getElementById("check-in-section").classList.remove("hidden");
         feedbackSection.classList.add("hidden");
-    });
+    }
+
+    function showSummary() {
+        let summary = "";
+        checkInData.forEach((checkIn, index) => {
+            summary += `<div>Dag ${index + 1}: Check-in: ${checkIn || "Niet ingevuld"}, Check-out: ${checkOutData[index] || "Niet ingevuld"}</div>`;
+        });
+        document.getElementById("summary-content").innerHTML = summary;
+        document.getElementById("final-analysis").textContent =
+            "Je hebt een prachtige reis gemaakt in lichaamsbewustzijn en emotieherkenning. Ga door met reflecteren en communiceren.";
+        document.getElementById("summary-section").classList.remove("hidden");
+        feedbackSection.classList.add("hidden");
+    }
 });
