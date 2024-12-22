@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("daily-check-in").classList.remove("hidden");
         dailyTask.classList.add("hidden");
         feedbackSection.classList.add("hidden");
+        nextBtn.classList.add("hidden");
+        overviewBtn.classList.add("hidden");
     }
 
     /**
@@ -61,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
         dailyTask.classList.remove("hidden");
         choiceContainer.classList.remove("hidden");
         feedbackSection.classList.add("hidden");
+        nextBtn.classList.add("hidden"); // Verbergen totdat feedback is getoond
+        overviewBtn.classList.remove("hidden");
     }
 
     /**
@@ -70,8 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackSection.innerHTML = `<p><strong>Feedback:</strong> Goede keuze! ${choice} is een mooie stap.</p>`;
         feedbackSection.classList.remove("hidden");
         choiceContainer.classList.add("hidden");
-        nextBtn.classList.remove("hidden");
-        overviewBtn.classList.remove("hidden");
+        nextBtn.classList.remove("hidden"); // Knop weer tonen
     }
 
     /**
