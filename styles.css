@@ -1,14 +1,14 @@
 /* Algemene styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f3f2ef;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
     color: #333;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 50px auto;
     padding: 20px;
     background-color: white;
@@ -26,7 +26,7 @@ h1 {
 
 h2 {
     font-size: 1.8em;
-    color: #333;
+    color: #555;
     margin-bottom: 15px;
 }
 
@@ -46,11 +46,6 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
     resize: none;
-}
-
-textarea::placeholder {
-    font-style: italic;
-    color: #999;
 }
 
 textarea:focus {
@@ -82,12 +77,14 @@ textarea:focus {
     display: none;
 }
 
-/* Secties */
-#analysis-section, #sleep-section {
+/* Navigatie */
+.navigation {
     margin-top: 20px;
-    padding: 15px;
-    background-color: #fff0f0;
-    border: 1px dashed #9c1925;
+    text-align: center;
+}
+
+/* Actieve dagmarkering */
+.active-day {
+    font-weight: bold;
     color: #9c1925;
-    border-radius: 10px;
 }
