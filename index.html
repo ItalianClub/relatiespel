@@ -1,35 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>14-Daags Relatiespel</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>14-Daags Relatiespel ❤️</h1>
-        <p id="intro">
-            Werk elke dag aan jullie relatie met een unieke opdracht. Vandaag is Dag <span id="day-number">1</span>. 🚀
-        </p>
-        
-        <!-- Progressiebalk -->
-        <div id="progress-bar-container" aria-label="Voortgang van het spel">
-            <div id="progress-bar"></div>
-        </div>
-        
-        <!-- Placeholder voor dynamische dagelijkse opdrachten -->
-        <div id="daily-task">
-            <p class="loading">De opdracht van vandaag wordt geladen... 🕒</p>
-        </div>
-        
-        <!-- Knoppen -->
-        <div id="button-container">
-            <button id="start-btn" class="btn">Start Spel 🎮</button>
-            <button id="next-btn" class="btn hidden">Volgende Dag ➡️</button>
-        </div>
+<div class="container">
+    <h1>14-Daags Relatiespel ❤️</h1>
+    <p id="intro">
+        Werk elke dag aan jullie relatie met een unieke opdracht. Vandaag is Dag <span id="day-number">1</span>. 🚀
+    </p>
+
+    <!-- Voortgangsbalk -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <!-- Opdracht van de dag -->
+    <div id="daily-task"></div>
+
+    <!-- Feedback -->
+    <div id="feedback-section"></div>
+
+    <!-- Knoppen -->
+    <div id="button-container">
+        <button id="start-btn" class="btn">Start Spel 🎮</button>
+        <button id="next-btn" class="btn hidden">Volgende Dag ➡️</button>
+    </div>
+</div>
