@@ -14,7 +14,7 @@ body {
     background-color: white; /* Witte achtergrond */
     padding: 20px;
     border-radius: 10px; /* Ronde hoeken */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Zachte schaduw */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Schaduw voor diepte */
 }
 
 /* Titel en tekst */
@@ -27,29 +27,28 @@ h1 {
 p {
     font-size: 1.2em;
     margin-bottom: 20px;
-    line-height: 1.6; /* Betere leesbaarheid */
+    line-height: 1.6;
 }
 
 /* Voortgangsbalk */
 #progress-bar-container {
     width: 100%;
     height: 20px;
-    background-color: #e6ded0; /* Lichte achtergrondkleur */
+    background-color: #e6ded0;
     border-radius: 10px;
     margin: 20px 0;
     overflow: hidden;
-    position: relative;
 }
 
 #progress-bar {
     height: 100%;
-    background-color: #9c1925; /* Rode voortgangsbalk */
-    width: 0%; /* Startpunt */
-    transition: width 0.4s ease-in-out; /* Vloeiende overgang */
+    background-color: #9c1925;
+    width: 0%;
+    transition: width 0.4s ease-in-out;
 }
 
-/* Opdracht van de dag */
-#daily-task {
+/* Opdracht en feedback styling */
+.task, .feedback, .reward {
     margin: 20px 0;
     padding: 15px;
     border: 1px solid #ccc;
@@ -57,39 +56,23 @@ p {
     background-color: #f9f9f9;
 }
 
-#daily-task h2 {
-    font-size: 1.5em;
+.feedback {
+    border: 1px dashed #9c1925;
+    background-color: #fff0f0;
     color: #9c1925;
-    margin-bottom: 10px;
 }
 
-#daily-task p {
-    font-size: 1.2em;
-    line-height: 1.6;
-}
-
-/* Feedback sectie */
-#feedback-section {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px dashed #9c1925; /* Dashed border voor feedback */
-    border-radius: 10px;
-    background-color: #fff0f0; /* Zachte rode tint */
-    color: #9c1925;
-    font-size: 1.1em;
-    display: none; /* Verborgen totdat feedback wordt getoond */
-}
-
-#feedback-section p {
-    margin: 0;
-    line-height: 1.5;
+.reward {
+    border: 1px solid gold;
+    background-color: #fffbe5;
+    color: #d4af37;
 }
 
 /* Knoppen */
 .btn {
     padding: 10px 20px;
     font-size: 1em;
-    background-color: #9c1925; /* Rood */
+    background-color: #9c1925;
     color: white;
     border: none;
     border-radius: 5px;
@@ -99,16 +82,16 @@ p {
 }
 
 .btn:hover {
-    background-color: #b3212f; /* Donkerder rood bij hover */
-    transform: scale(1.05); /* Lichte vergroting bij hover */
+    background-color: #b3212f;
+    transform: scale(1.05);
 }
 
 .hidden {
-    display: none; /* Verberg elementen */
+    display: none;
 }
 
 /* Animaties */
-#daily-task, #feedback-section {
+.task, .feedback, .reward {
     animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -129,14 +112,6 @@ p {
 
     h1 {
         font-size: 1.8em;
-    }
-
-    p {
-        font-size: 1.1em;
-    }
-
-    #daily-task h2 {
-        font-size: 1.3em;
     }
 
     .btn {
