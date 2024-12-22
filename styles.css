@@ -1,47 +1,42 @@
-/* styles.css */
+/* styles-charades.css */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f9f7f4;
+    color: #333;
     margin: 0;
     padding: 0;
-    background-color: #f7f6f2;
-    color: #333;
 }
 
 .container {
-    max-width: 600px;
+    max-width: 500px;
     margin: 50px auto;
     text-align: center;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     font-size: 2em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #9c1925;
 }
 
 p {
-    font-size: 1.2em;
     margin-bottom: 20px;
-}
-
-.game-area {
-    margin-top: 20px;
+    font-size: 1.1em;
 }
 
 .btn {
-    display: inline-block;
     padding: 10px 20px;
     font-size: 1em;
-    color: white;
     background-color: #9c1925;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: 0.3s ease;
 }
 
 .btn:hover {
@@ -50,9 +45,4 @@ p {
 
 .hidden {
     display: none;
-}
-
-h2, h3 {
-    margin: 20px 0;
-    color: #333;
 }
