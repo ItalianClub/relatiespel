@@ -83,8 +83,15 @@ textarea:focus {
     text-align: center;
 }
 
-/* Actieve dagmarkering */
-.active-day {
+/* Voortgangsindicator */
+#progress-indicator {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Dag actieve markering */
+#day-number {
     font-weight: bold;
     color: #9c1925;
 }
