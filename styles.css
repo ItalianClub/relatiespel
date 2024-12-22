@@ -19,7 +19,7 @@ body {
 
 h1 {
     font-size: 2em;
-    color: #9c1925;
+    color: #9c1925; /* Italiaanse roodtint */
     margin-bottom: 20px;
 }
 
@@ -30,7 +30,24 @@ p {
 }
 
 /* Dagelijkse Check-in */
-#daily-check-in textarea {
+#daily-check-in {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#daily-check-in h2 {
+    font-size: 1.5em;
+    color: #9c1925;
+    margin-bottom: 10px;
+}
+
+#check-in-text {
     width: 100%;
     height: 100px;
     margin: 10px 0;
@@ -41,17 +58,64 @@ p {
     resize: none;
 }
 
-#daily-check-in button {
+#check-in-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #9c1925;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#check-in-btn:hover {
+    background-color: #b3212f;
+    transform: scale(1.05);
+}
+
+/* Opdracht sectie */
+#daily-task {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    display: none; /* Verbergen tot geladen */
+}
+
+#task-title {
+    font-size: 1.5em;
+    color: #9c1925;
+    margin-bottom: 10px;
+}
+
+#task-description {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+#choice-container {
     margin-top: 10px;
 }
 
-/* Feedback */
+#choice-container p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+#choice-container .btn {
+    margin: 5px;
+}
+
+/* Feedback sectie */
 .feedback {
+    margin: 20px 0;
+    padding: 15px;
     border: 1px dashed #9c1925;
     background-color: #fff0f0;
     color: #9c1925;
-    margin-top: 20px;
-    padding: 15px;
     border-radius: 10px;
 }
 
@@ -65,6 +129,7 @@ p {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
+    margin: 10px 5px;
 }
 
 .btn:hover {
@@ -76,6 +141,7 @@ p {
     display: none;
 }
 
+/* Responsieve styling */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -85,8 +151,20 @@ p {
         font-size: 1.8em;
     }
 
+    p {
+        font-size: 1.1em;
+    }
+
     .btn {
         font-size: 0.9em;
         padding: 8px 15px;
+    }
+
+    #daily-check-in h2 {
+        font-size: 1.3em;
+    }
+
+    #check-in-text {
+        font-size: 0.9em;
     }
 }
