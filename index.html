@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatietherapie Spel - Emoties en Lichaam</title>
+    <title>Relatietherapie Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Relatietherapie Spel ❤️</h1>
-        <p id="intro">Vandaag is Dag <span id="day-number">1</span>. Werk stap voor stap aan veilige communicatie. 🚀</p>
+        <h1>Relatietherapie Game ❤️</h1>
+        <p id="intro">Dag <span id="day-number">1</span> - Werk aan emotieherkenning en lichaamsbewustzijn.</p>
 
         <!-- Check-in Sectie -->
         <div id="check-in-section">
-            <h2>Check-in: Hoe voel je je vandaag? 🧘‍♀️</h2>
-            <textarea id="check-in-text" placeholder="Beschrijf je emotionele en fysieke toestand..."></textarea>
+            <h2>Check-in: Reflecteer op je dag</h2>
+            <p id="check-in-prompt"></p>
+            <textarea id="check-in-text" placeholder="Beschrijf je gevoelens en fysieke toestand..."></textarea>
             <button id="check-in-btn" class="btn">Check-in Voltooien ✅</button>
         </div>
 
         <!-- Analyse Sectie -->
         <div id="analysis-section" class="hidden">
-            <h2>Analyse van je Check-in 🔍</h2>
+            <h2>Analyse van je Check-in</h2>
             <p id="analysis-result"></p>
             <button id="next-btn" class="btn">Ga naar de Oefening ➡️</button>
         </div>
@@ -34,30 +35,17 @@
 
         <!-- Check-out Sectie -->
         <div id="check-out-section" class="hidden">
-            <h2>Check-out: Reflecteer op vandaag ✨</h2>
-            <textarea id="check-out-text" placeholder="Wat heb je vandaag geleerd? Wat voelde je tijdens de dag?"></textarea>
+            <h2>Check-out: Reflecteer op je dag</h2>
+            <p id="check-out-prompt"></p>
+            <textarea id="check-out-text" placeholder="Wat heb je geleerd en ervaren vandaag?"></textarea>
             <button id="check-out-btn" class="btn">Check-out Voltooien ✅</button>
         </div>
 
-        <!-- Analyse na Check-out -->
-        <div id="post-analysis-section" class="hidden">
-            <h2>Analyse van je Dag 🌟</h2>
-            <p id="post-analysis-result"></p>
-            <button id="sleep-exercise-btn" class="btn">Ga naar de Slaapoefening 🌙</button>
-        </div>
-
-        <!-- Slaapoefening Sectie -->
+        <!-- Slaap Sectie -->
         <div id="sleep-section" class="hidden">
-            <h2>Slaapoefening: Tot rust komen 🌙</h2>
+            <h2>Slaapoefening: Kom tot rust</h2>
             <p id="sleep-exercise-description"></p>
             <button id="next-day-btn" class="btn">Volgende Dag ➡️</button>
-        </div>
-
-        <!-- Samenvatting Sectie -->
-        <div id="summary-section" class="hidden">
-            <h2>Samenvatting van 14 Dagen 📖</h2>
-            <div id="summary-content"></div>
-            <p id="final-analysis"></p>
         </div>
     </div>
     <script src="script.js"></script>
