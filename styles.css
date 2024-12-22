@@ -21,7 +21,7 @@ body {
 /* Hoofdtekst en kopjes */
 h1 {
     color: #9c1925;
-    font-size: 2.2em;
+    font-size: 2em;
     margin-bottom: 20px;
 }
 
@@ -103,37 +103,13 @@ textarea.error {
     margin: 10px 0;
 }
 
-/* Samenvatting sectie */
-#summary-content {
-    text-align: left;
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-top: 10px;
-}
-
-#summary-content div {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-#summary-content div strong {
-    display: block;
-    color: #9c1925;
-    font-size: 1.2em;
-    margin-bottom: 5px;
-}
-
-/* Navigatie knoppen */
-.navigation-section {
+/* Opdracht sectie */
+#task-section {
     margin: 20px 0;
-}
-
-.navigation-section .btn {
-    display: inline-block;
-    margin: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
 }
 
 /* Responsieve layout */
