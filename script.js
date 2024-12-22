@@ -1,98 +1,98 @@
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM is volledig geladen!");
 
-/* Algemene styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f2ef; /* Zachte achtergrondkleur */
-    color: #333; /* Donkergrijze tekstkleur */
-    margin: 0;
-    padding: 0;
-}
+    // Elementen selecteren
+    const dayNumber = document.getElementById("day-number");
+    const dailyTask = document.getElementById("daily-task");
+    const nextBtn = document.getElementById("next-btn");
+    const startBtn = document.getElementById("start-btn");
+    const progressBar = document.getElementById("progress-bar");
 
-.container {
-    max-width: 600px;
-    margin: 50px auto; /* Center het spel op het scherm */
-    text-align: center;
-    background-color: white; /* Witte achtergrond voor contrast */
-    padding: 20px;
-    border-radius: 10px; /* Ronde hoeken */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Schaduw voor diepte */
-}
+    // Taken array
+    const tasks = [
+        { day: 1, title: "Reflectie op emoties ❤️", description: "Noteer drie momenten waarop jij sterke emoties hebt gevoeld deze week. 🥺 Bespreek samen hoe jullie die emoties beter hadden kunnen communiceren." },
+        { day: 2, title: "Complimentendag 🌟", description: "Geef elkaar gedurende de dag drie oprechte complimenten. Noteer hoe dit voelt. ❤️" },
+        { day: 3, title: "Triggers ontdekken 🤔", description: "Bespreek situaties die vaak frustraties of irritaties oproepen. Wat kun je herkennen in jezelf of de ander? 😡" },
+        { day: 4, title: "Het Time-Out Plan 🔄", description: "Maak samen afspraken over hoe je een 'time-out' kunt nemen bij een conflict. Welke signalen gebruik je? 🛑" },
+        { day: 5, title: "Een moment van dankbaarheid 🥰", description: "Deel iets waarvoor je dankbaar bent in je partner. Schrijf het op en lees het hardop voor." },
+        { day: 6, title: "Wat betekent harmonie? 🤝", description: "Definieer samen wat harmonie betekent in jullie relatie. Noteer hoe jullie dit kunnen bereiken." },
+        { day: 7, title: "Emotie-Charades 🎭", description: "Beeld emoties uit (zoals blij, boos, zenuwachtig). Raad samen wat deze emoties zijn." }
+    ];
 
-h1 {
-    font-size: 2em; /* Grote titel */
-    color: #9c1925; /* Italiaanse roodtint */
-    margin-bottom: 20px;
-}
+    // Voortgang bijhouden
+    let currentDay = parseInt(localStorage.getItem("currentDay")) || 0;
 
-p {
-    font-size: 1.2em; /* Leessbare tekstgrootte */
-    margin-bottom: 20px;
-    line-height: 1.6; /* Betere leesbaarheid */
-}
-
-textarea {
-    width: 100%; /* Tekstvak vult de breedte */
-    height: 100px; /* Voldoende ruimte voor tekst */
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none; /* Gebruiker kan het tekstvak niet schalen */
-    margin-top: 20px;
-    background-color: #f9f9f9;
-}
-
-textarea::placeholder {
-    color: #aaa; /* Lichte kleur voor de placeholder tekst */
-}
-
-.btn {
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #9c1925; /* Rood voor opvallende knoppen */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 20px;
-}
-
-.btn:hover {
-    background-color: #b3212f; /* Donkerder rood bij hover */
-    transform: scale(1.05); /* Lichte vergroting bij hover */
-}
-
-.hidden {
-    display: none; /* Verbergt elementen */
-}
-
-#daily-task p {
-    font-size: 1.1em;
-    margin-bottom: 10px;
-    color: #555; /* Zachte grijze kleur */
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-        margin: 20px auto;
+    /**
+     * Update de voortgangsbalk.
+     */
+    function updateProgress() {
+        const progressPercentage = ((currentDay + 1) / tasks.length) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
     }
 
-    h1 {
-        font-size: 1.8em;
+    /**
+     * Laad de opdracht van de huidige dag.
+     */
+    function loadTask() {
+        const task = tasks[currentDay];
+
+        if (!task) {
+            console.warn("Geen opdracht gevonden. Het spel is voltooid!");
+            dailyTask.innerHTML = `<p>Gefeliciteerd! Jullie hebben het hele spel voltooid! 🎉❤️</p>`;
+            nextBtn.classList.add("hidden");
+            return;
+        }
+
+        dayNumber.textContent = currentDay + 1;
+        dailyTask.innerHTML = `
+            <h2>${task.title}</h2>
+            <p>${task.description}</p>
+        `;
+
+        updateProgress();
+
+        // Knop aanpassen voor laatste dag
+        nextBtn.textContent = (currentDay + 1 === tasks.length) ? "Afronden 🎉" : "Volgende Dag ➡️";
+        nextBtn.classList.remove("hidden");
     }
 
-    p {
-        font-size: 1.1em;
+    /**
+     * Sla de huidige voortgang op in localStorage.
+     */
+    function saveProgress() {
+        localStorage.setItem("currentDay", currentDay);
     }
 
-    .btn {
-        font-size: 0.9em;
-        padding: 8px 15px;
-    }
+    /**
+     * Start het spel door de eerste dag te laden.
+     */
+    startBtn.addEventListener("click", () => {
+        startBtn.classList.add("hidden");
+        currentDay = 0;
+        nextBtn.classList.remove("hidden");
+        loadTask();
+        saveProgress();
+    });
 
-    textarea {
-        height: 80px;
+    /**
+     * Ga naar de volgende dag en laad de volgende opdracht.
+     */
+    nextBtn.addEventListener("click", () => {
+        if (currentDay < tasks.length - 1) {
+            currentDay++;
+            loadTask();
+            saveProgress();
+        } else {
+            // Einde van het spel
+            dailyTask.innerHTML = `<p>Gefeliciteerd! Jullie hebben het hele spel voltooid! 🎉❤️</p>`;
+            nextBtn.classList.add("hidden");
+        }
+    });
+
+    // Laad voortgang bij het herstarten van het spel
+    if (currentDay > 0) {
+        startBtn.classList.add("hidden");
+        nextBtn.classList.remove("hidden");
+        loadTask();
     }
-}
+});
