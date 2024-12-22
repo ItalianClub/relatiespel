@@ -20,6 +20,7 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin-top: 20px;
+    overflow-y: auto; /* Voorkom dat de inhoud uit het scherm valt */
 }
 
 /* Koppen */
@@ -88,6 +89,10 @@ textarea:focus, select:focus {
     display: none;
 }
 
+.section {
+    margin-bottom: 20px;
+}
+
 /* Samenvatting stijl */
 #emotion-summary {
     text-align: left;
@@ -96,6 +101,10 @@ textarea:focus, select:focus {
     border-radius: 10px;
     margin: 20px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#emotion-summary h2 {
+    color: #9c1925;
 }
 
 /* Responsieve layout */
@@ -116,4 +125,39 @@ textarea:focus, select:focus {
         padding: 10px 15px;
         font-size: 0.9em;
     }
+
+    textarea, select {
+        font-size: 1em;
+    }
+}
+
+/* Progressie-indicator styling */
+#progress-indicator {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#progress-indicator span {
+    font-weight: bold;
+    color: #9c1925;
+}
+
+/* Analyse styling */
+#summary-description {
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+/* Activiteit Indicatoren */
+#check-in-text, #check-out-text {
+    height: 150px;
+    resize: vertical;
+}
+
+/* Boodschap bij succes of waarschuwing */
+.error-message {
+    color: red;
+    font-size: 1.1em;
+    margin-top: 20px;
 }
