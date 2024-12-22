@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 
-/* Centraal container */
+/* Container styling */
 .container {
     max-width: 700px;
     margin: 50px auto;
@@ -15,26 +15,26 @@ body {
     background-color: white;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Hoofdtekst en kopjes */
 h1 {
     color: #9c1925;
-    font-size: 2.4em;
+    font-size: 2.5em;
     margin-bottom: 20px;
 }
 
 h2 {
     color: #333;
-    font-size: 1.6em;
+    font-size: 1.8em;
     margin-bottom: 15px;
 }
 
 p {
     font-size: 1.2em;
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 /* Tekstvelden */
@@ -55,15 +55,9 @@ textarea:focus {
     outline: none;
 }
 
-/* Foutstijl voor tekstvelden */
-textarea.error {
-    border-color: red;
-    background-color: #ffe6e6;
-}
-
 /* Knoppen */
 .btn {
-    padding: 12px 25px;
+    padding: 12px 20px;
     font-size: 1em;
     background-color: #9c1925;
     color: white;
@@ -84,7 +78,7 @@ textarea.error {
     display: none;
 }
 
-/* Feedback en analyse secties */
+/* Sectie styling */
 .feedback, #analysis-section, #check-out-section {
     margin: 20px 0;
     padding: 20px;
@@ -94,39 +88,6 @@ textarea.error {
     border-radius: 10px;
     font-size: 1.1em;
     line-height: 1.6;
-}
-
-/* Navigatie */
-.navigation {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.navigation .btn {
-    margin: 10px 15px;
-}
-
-/* Samenvatting */
-#summary-content {
-    text-align: left;
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-top: 20px;
-}
-
-#summary-content div {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-#summary-content div strong {
-    display: block;
-    color: #9c1925;
-    font-size: 1.2em;
-    margin-bottom: 5px;
 }
 
 /* Responsieve layout */
@@ -140,7 +101,7 @@ textarea.error {
     }
 
     h2 {
-        font-size: 1.4em;
+        font-size: 1.5em;
     }
 
     textarea {
@@ -149,6 +110,6 @@ textarea.error {
 
     .btn {
         font-size: 0.9em;
-        padding: 10px 20px;
+        padding: 10px 15px;
     }
 }
