@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalDays = 14;
     let currentDay = 1;
     let reflections = {}; // Opslag voor reflecties per dag
+    let emotionalGrowth = []; // Opslag voor emotionele groei
+    let bodyTension = []; // Opslag voor lichamelijke spanning
 
     // Secties ophalen
     const sections = {
@@ -25,16 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
         reset: document.getElementById("reset-btn"),
     };
 
-    // Lichaamsgerichte oefeningen per lichaamsdeel
-    const bodyPartExercises = {
-        hoofd: "Masseer je slapen in cirkelvormige bewegingen terwijl je rustig ademhaalt.",
-        borst: "Plaats je hand op je borst, adem diep in en voel hoe je borst zich opent en ontspant.",
-        buik: "Adem diep in en voel je buik op en neer bewegen. Focus op het loslaten van spanning in je buik.",
-        schouders: "Rol je schouders langzaam naar achteren en laat ze zakken terwijl je diep uitademt.",
-        handen: "Schud je handen los en stretch je vingers. Voel hoe spanning verdwijnt.",
-        benen: "Span je benen aan, houd dit 5 seconden vast, en laat dan langzaam los. Herhaal dit driemaal.",
-    };
-
     // Emotiegerichte oefeningen
     const emotionExercises = {
         blij: "Schrijf op wat je vreugde bracht vandaag. Hoe kun je meer van deze momenten creëren?",
@@ -48,6 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
         enthousiast: "Noteer wat je energie geeft. Hoe kun je dit enthousiasme vasthouden?",
     };
 
+    // Lichaamsgerichte oefeningen per lichaamsdeel
+    const bodyPartExercises = {
+        hoofd: "Masseer je slapen in cirkelvormige bewegingen terwijl je rustig ademhaalt.",
+        borst: "Plaats je hand op je borst, adem diep in en voel hoe je borst zich opent en ontspant.",
+        buik: "Adem diep in en voel je buik op en neer bewegen. Focus op het loslaten van spanning in je buik.",
+        schouders: "Rol je schouders langzaam naar achteren en laat ze zakken terwijl je diep uitademt.",
+        handen: "Schud je handen los en stretch je vingers. Voel hoe spanning verdwijnt.",
+        benen: "Span je benen aan, houd dit 5 seconden vast, en laat dan langzaam los. Herhaal dit driemaal.",
+    };
+
     // Sectie tonen of verbergen
     const showSection = (id) => {
         Object.values(sections).forEach((section) => section.classList.add("hidden"));
@@ -58,6 +60,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadDayContent = () => {
         document.getElementById("check-in-prompt").textContent = `Dag ${currentDay}: Hoe voel je je? Beschrijf je emoties en fysieke toestand.`;
         document.getElementById("day-number").textContent = currentDay;
+    };
+
+    // Korte emotionele analyse na 2 dagen
+    const shortAnalysis = (day) => {
+        if (day % 2 === 0) {
+            const checkInReflection = reflections[day].checkIn;
+            const emotions = reflections[day].emotions;
+            const bodyParts = reflections[day].bodyParts;
+
+            const morningEmotions = emotions.join(", ");
+            const eveningEmotions = bodyParts.join(", ");
+
+            return `Op dag ${day} heb je je emoties als volgt ervaren: 'Ochtend emoties: ${morningEmotions}' en 'Avond emoties: ${eveningEmotions}'.`;
+        }
+        return '';
+    };
+
+    // Emotionele groei na een week
+    const emotionalGrowthAnalysis = () => {
+        return `
+            Na een week is er sprake van groei in emotionele zelfkennis en lichaamsbewustzijn. 
+            Je hebt verschillende emoties leren herkennen en reflecteren, maar ook belangrijke knelpunten zoals spanning in je schouders en angstbeheersing werden duidelijk.
+            Blijf de link tussen emoties en lichamelijke sensaties onderzoeken.
+        `;
+    };
+
+    // Analyse na 14 dagen
+    const finalAnalysis = () => {
+        return `
+            Na 14 dagen reflectie en emotieherkenning, is er een duidelijke vooruitgang zichtbaar in je emotionele groei en lichaamsbewustzijn. 
+            Je hebt bepaalde traumas en onderliggende emoties geidentificeerd, zoals stress in je buik en vastgezette boosheid in je schouders. 
+            Je hebt geleerd om te werken met je emoties door middel van phygosomatische oefeningen zoals ademhaling en ontspanning. 
+            Het is tijd om verder te werken aan het loslaten van spanning, door je focus te richten op diepe ademhaling en ontspanning van het hele lichaam.
+        `;
     };
 
     // Check-in
@@ -126,6 +162,20 @@ document.addEventListener("DOMContentLoaded", () => {
             showSection("checkIn");
         } else {
             alert("Gefeliciteerd! Je hebt alle dagen voltooid!");
+            const finalAnalysisText = finalAnalysis();
+            alert(finalAnalysisText); // Einde analyse na 14 dagen
+        }
+
+        // Na 2 dagen een korte analyse tonen
+        if (currentDay % 2 === 0) {
+            const analysisText = shortAnalysis(currentDay);
+            alert(analysisText); // Eenvoudige analyse na 2 dagen
+        }
+
+        // Na 7 dagen een emotionele groei-analyse tonen
+        if (currentDay === 7) {
+            const growthAnalysis = emotionalGrowthAnalysis();
+            alert(growthAnalysis); // Emotionele groei-analyse na een week
         }
     });
 
